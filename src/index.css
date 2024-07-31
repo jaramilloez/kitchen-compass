@@ -1,6 +1,7 @@
 body {
     background-color: rgb(240, 240, 230);
     font-family: Zain;
+    padding: 0 .25rem;
 }
 
 .form-control {
@@ -10,4 +11,20 @@ body {
 .form-control:focus {
     box-shadow: none;
     border-color: black;
+}
+
+.recipeCard:hover {
+    box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075);
+    transition: box-shadow .2s;
+}
+
+.cardDrawer {
+    top: 100% !important;
+    transition: top 1s;
+}
+
+.recipeCard:hover .cardDrawer {
+    display: block !important;
+    top: 0 !important;
+    transition: top 1s
 }

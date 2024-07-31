@@ -5,7 +5,7 @@ class NavBar extends Component {
     state = {  } 
     render() { 
         return <React.Fragment>
-            <nav className='navbar navbar-expand-sm'>
+            <nav className='navbar navbar-expand-sm mb-5'>
                 <div className='container-fluid px-3 px-sm-5'>
                     <Link to='/' className='navbar-brand fs-2 fw-bold'>Kitchen Compass</Link>
                     <button 
