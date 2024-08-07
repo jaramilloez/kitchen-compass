@@ -8,11 +8,11 @@ const Recipes = () => {
                 <div className='recipeCard card border-0'>
                     <div className='position-relative'>
                         <img className='card-img-top' src={ require("../images/spaghetti.jpg") } alt='Spaghetti' />
-                        <div className='cardDrawer bg-light position-absolute fs-5 opacity-75 w-100 h-100 p-3'>
-                            Lorem Ipsum
+                        <div className='cardDrawer bg-light position-absolute fs-5 opacity-75 w-100 p-3 overflow-hidden z-0'>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                         </div>
                     </div>
-                    <div className='card-body bg-light rounded-bottom-2 py-2'>
+                    <div className='card-body bg-light rounded-bottom-2 py-2 z-1'>
                         <div className='card-title fs-4'>Spaghetti</div>
                     </div>
                 </div>
@@ -21,11 +21,11 @@ const Recipes = () => {
                 <div className='recipeCard card border-0'>
                     <div className='position-relative'>
                         <img className='card-img-top' src={ require("../images/spaghetti.jpg") } alt='Spaghetti' />
-                        <div className='cardDrawer bg-light position-absolute fs-5 opacity-75 w-100 h-100 p-3'>
-                            Lorem Ipsum
+                        <div className='cardDrawer bg-light position-absolute fs-5 opacity-75 w-100 p-3 overflow-hidden z-0'>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                         </div>
                     </div>
-                    <div className='card-body bg-light rounded-bottom-2 py-2'>
+                    <div className='card-body bg-light rounded-bottom-2 py-2 z-1'>
                         <div className='card-title fs-4'>Spaghetti</div>
                     </div>
                 </div>
@@ -34,11 +34,11 @@ const Recipes = () => {
                 <div className='recipeCard card border-0'>
                     <div className='position-relative'>
                         <img className='card-img-top' src={ require("../images/spaghetti.jpg") } alt='Spaghetti' />
-                        <div className='cardDrawer bg-light position-absolute fs-5 opacity-75 w-100 h-100 p-3'>
-                            Lorem Ipsum
+                        <div className='cardDrawer bg-light position-absolute fs-5 opacity-75 w-100 p-3 overflow-hidden z-0'>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                         </div>
                     </div>
-                    <div className='card-body bg-light rounded-bottom-2 py-2'>
+                    <div className='card-body bg-light rounded-bottom-2 py-2 z-1'>
                         <div className='card-title fs-4'>Spaghetti</div>
                     </div>
                 </div>

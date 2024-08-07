@@ -14,17 +14,19 @@ body {
 }
 
 .recipeCard:hover {
-    box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075);
+    box-shadow: 0 0 1rem rgba(0, 0, 0, .15);
     transition: box-shadow .2s;
 }
 
 .cardDrawer {
     top: 100% !important;
-    transition: top 1s;
+    height: 0;
+    transition: all .5s;
 }
 
 .recipeCard:hover .cardDrawer {
-    display: block !important;
+    display: block;
     top: 0 !important;
-    transition: top 1s
+    height: 100%;
+    transition: all .3s;
 }
