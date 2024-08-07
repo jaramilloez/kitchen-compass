@@ -1,7 +1,7 @@
 export const recipes = [
-    {
-        _id: 0,
-        title: 'Spaghetti',
-        description: 'A pasta that'
-    }
-]
+  {
+    _id: 0,
+    title: "Spaghetti",
+    description: "A pasta that",
+  },
+];
