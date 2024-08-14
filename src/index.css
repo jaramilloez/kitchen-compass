@@ -55,7 +55,7 @@ body {
   bottom: 15%;
   width: 0;
   background-color: black;
-  transition: width 0.1s;
+  transition: width 0.2s;
 }
 .linkLine:hover::after {
   width: 100%;
