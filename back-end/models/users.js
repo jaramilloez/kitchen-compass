@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
+    unique: true,
   },
   password: {
     type: String,
@@ -22,5 +23,18 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
 });
+const User = mongoose.model("User", userSchema);
 
-module.exports = userSchema;
+function validateUser(user) {
+  const schema = {
+    name: Joi.string().required(),
+    email: Joi.email().required(),
+    password: Joi.String().required(),
+    groupId: Joi.objectId().required(),
+    customRecipeIds: Joi.array().items(Joi.objectId),
+  };
+  return Joi.validate(user, schema);
+}
+
+exports.User = User;
+exports.validate = validateUser;

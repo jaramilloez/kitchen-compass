@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Joi = require("joi");
 const { categorySchema } = require("./category");
 
 const ingredientSchema = new mongoose.Schema({
@@ -11,5 +12,16 @@ const ingredientSchema = new mongoose.Schema({
     required: true,
   },
 });
+const Ingredient = mongoose.model("Ingredient", ingredientSchema);
 
-module.exports = ingredientSchema;
+function validateIngredient(ingredient) {
+  const schema = {
+    name: Joi.string().required(),
+    category: Joi.required(),
+  };
+  return Joi.validate(ingredient, schema);
+}
+
+exports.ingredientSchema = ingredientSchema;
+exports.Ingredient = Ingredient;
+exports.validate = validateIngredient;

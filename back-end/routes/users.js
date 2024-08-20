@@ -1,5 +1,12 @@
-router.get("/users/:id", (req, res) => {
-  res.send(req.params);
+const express = require("express");
+const { User, validate } = require("../models/users");
+
+const router = express.Router();
+router.get("/:id", async (req, res) => {
+  const user = await User.findById(req.params.id);
+  res.send(user);
 });
-router.post("/users", (req, res) => {});
-router.put("/users", (req, res) => {});
+router.post("/", async (req, res) => {});
+router.put("/", async (req, res) => {});
+
+module.exports = router;
