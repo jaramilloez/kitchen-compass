@@ -18,11 +18,11 @@ const userSchema = new mongoose.Schema({
   },
   groupId: {
     type: String,
-    required: true,
+    required: false,
   },
   customRecipeIds: {
     type: [String],
-    required: true,
+    required: false,
   },
 });
 const User = mongoose.model("User", userSchema);
@@ -32,7 +32,7 @@ function validateUser(user) {
     name: Joi.string().required(),
     email: Joi.email().required(),
     password: Joi.String().required(),
-    groupId: Joi.objectId().required(),
+    groupId: Joi.objectId(),
     customRecipeIds: Joi.array().items(Joi.objectId),
   };
   return Joi.validate(user, schema);
