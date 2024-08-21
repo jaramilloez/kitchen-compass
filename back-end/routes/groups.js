@@ -1,5 +1,6 @@
 const express = require("express");
-const { Group, validate } = require("../models/group");
+
+const { Group, validate } = require("../models/groups");
 
 const router = express.Router();
 router.get("/:id", async (req, res) => {

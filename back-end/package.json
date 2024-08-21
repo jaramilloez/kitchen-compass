@@ -17,6 +17,8 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.19.2",
+    "joi": "^17.13.3",
+    "joi-objectid": "^4.0.2",
     "mongoose": "^8.5.3"
   }
 }

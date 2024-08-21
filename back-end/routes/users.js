@@ -1,4 +1,5 @@
 const express = require("express");
+
 const { User, validate } = require("../models/users");
 
 const router = express.Router();

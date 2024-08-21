@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
-const Joi = require("Joi");
+const Joi = require("joi");
+Joi.objectId = require("joi-objectid")(Joi);
 
-const recipeSchema = new mongoose.Schema({
+const groupSchema = new mongoose.Schema({
   code: {
     type: String,
     required: true,
@@ -11,7 +12,7 @@ const recipeSchema = new mongoose.Schema({
     required: true,
   },
 });
-const Recipe = mongoose.model("Recipe", recipeSchema);
+const Group = mongoose.model("Group", groupSchema);
 
 function validateGroup(group) {
   const schema = {
@@ -21,5 +22,5 @@ function validateGroup(group) {
   return Joi.validate(group, schema);
 }
 
-exports.Recipe = Recipe;
+exports.Group = Group;
 exports.validate = validateGroup;
