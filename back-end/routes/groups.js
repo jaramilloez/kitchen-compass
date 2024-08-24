@@ -26,6 +26,7 @@ router.post("/", async (req, res) => {
     code: code,
     userIds: [user.id],
   });
+
   try {
     const result = await group.save();
     res.send(result);
@@ -45,9 +46,14 @@ router.put("/:id", async (req, res) => {
       userIds: [req.body.userIds],
     },
   });
-  if (!group) return res.status(404).send("");
+  if (!group) return res.status(404).send("Group not found.");
+  res.send(group);
 });
 
-router.delete("/:id", async (req, res) => {});
+router.delete("/:id", async (req, res) => {
+  const group = await Group.findByIdAndDelete(req.params.id);
+  if (!group) return res.status(404).send("Group not found.");
+  res.send(group);
+});
 
 module.exports = router;
