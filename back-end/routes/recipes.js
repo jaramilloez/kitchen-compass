@@ -24,7 +24,9 @@ router.post("/", async (req, res) => {
     const ingredientId = ingredientIds[i];
     const ingredient = await User.findById(ingredientId);
     if (!ingredient)
-      return res.status(400).send(`User with ID ${ingredientId} not found.`);
+      return res
+        .status(400)
+        .send(`Invalid ingredient with ID ${ingredientId}.`);
 
     ingredients += ingredient;
   }
@@ -56,7 +58,9 @@ router.put("/:id", async (req, res) => {
     const ingredientId = ingredientIds[i];
     const ingredient = await User.findById(ingredientId);
     if (!ingredient)
-      return res.status(400).send(`User with ID ${ingredientId} not found.`);
+      return res
+        .status(400)
+        .send(`Invalid ingredient with ID ${ingredientId}.`);
 
     ingredients += ingredient;
   }

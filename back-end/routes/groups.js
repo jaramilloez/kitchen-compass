@@ -23,7 +23,7 @@ router.post("/", async (req, res) => {
   for (let i = 0; i < userIds.length; i++) {
     const userId = userIds[i];
     const user = await User.findById(userId);
-    if (!user) return res.status(400).send(`User with ID ${userId} not found.`);
+    if (!user) return res.status(400).send(`Invalid user with ID ${userId}.`);
   }
 
   const group = new Group({
@@ -48,7 +48,7 @@ router.put("/:id", async (req, res) => {
   for (let i = 0; i < userIds.length; i++) {
     const userId = userIds[i];
     const user = await User.findById(userId);
-    if (!user) return res.status(400).send(`User with ID ${userId} not found.`);
+    if (!user) return res.status(400).send(`Invalid user with ID ${userId}.`);
   }
 
   const group = await Group.findByIdAndUpdate(req.params.id, {
