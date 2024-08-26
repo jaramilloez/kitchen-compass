@@ -5,6 +5,7 @@ Joi.objectId = require("joi-objectid")(Joi);
 const groupSchema = new mongoose.Schema({
   code: {
     type: String,
+    required: true,
     unique: true,
     length: 6,
   },
@@ -17,7 +18,7 @@ const Group = mongoose.model("Group", groupSchema);
 
 function validateGroup(group) {
   const schema = {
-    code: Joi.string().unique().length(6),
+    code: Joi.string().required().unique().length(6),
     userIds: Joi.array().items(Joi.objectId().required()).required(),
   };
   return Joi.validate(group, schema);

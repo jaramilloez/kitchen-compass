@@ -43,7 +43,7 @@ router.put("/:id", async (req, res) => {
   const group = await Group.findByIdAndUpdate(req.params.id, {
     $set: {
       code: req.body.code,
-      userIds: [req.body.userIds],
+      userIds: req.body.userIds,
     },
   });
   if (!group) return res.status(404).send("Group not found.");
