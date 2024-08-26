@@ -10,7 +10,7 @@ router.get("/:id", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  //Receives a user id
+  //Receives an array of user ids
 
   let code;
   let duplicate;
@@ -19,12 +19,16 @@ router.post("/", async (req, res) => {
     duplicate = await Group.findOne({ code });
   }
 
-  const user = await User.findById(req.body);
-  if (!user) return res.status(400).send("User not found.");
+  const userIds = req.body;
+  for (let i = 0; i < userIds.length; i++) {
+    const userId = userIds[i];
+    const user = await User.findById(userId);
+    if (!user) return res.status(400).send(`User with ID ${userId} not found.`);
+  }
 
   const group = new Group({
     code: code,
-    userIds: [user.id],
+    userIds: userIds,
   });
 
   try {
@@ -40,10 +44,17 @@ router.put("/:id", async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
+  const userIds = req.body.userIds;
+  for (let i = 0; i < userIds.length; i++) {
+    const userId = userIds[i];
+    const user = await User.findById(userId);
+    if (!user) return res.status(400).send(`User with ID ${userId} not found.`);
+  }
+
   const group = await Group.findByIdAndUpdate(req.params.id, {
     $set: {
       code: req.body.code,
-      userIds: req.body.userIds,
+      userIds: userIds,
     },
   });
   if (!group) return res.status(404).send("Group not found.");
