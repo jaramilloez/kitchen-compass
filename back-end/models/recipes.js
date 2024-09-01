@@ -28,14 +28,14 @@ const recipeSchema = new mongoose.Schema({
 const Recipe = mongoose.model("Recipe", recipeSchema);
 
 function validateRecipe(recipe) {
-  const schema = {
+  const schema = Joi.schema({
     name: Joi.string().required(),
     description: Joi.string().required(),
     pic: Joi.buffer().required(),
     directions: Joi.array().items(Joi.string().required()).required(),
     ingredients: Joi.array().items(Joi.required()).required(),
-  };
-  return Joi.validate(recipe, schema);
+  });
+  return schema.validate(recipe);
 }
 
 exports.Recipe = Recipe;

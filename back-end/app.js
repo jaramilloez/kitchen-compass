@@ -16,14 +16,14 @@ const app = express();
 require("./routes/cors")(app);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use("./api/categories", categories);
-app.use("./api/groups", groups);
-app.use("./api/ingredients", ingredients);
-app.use("./api/recipes", recipes);
-app.use("./api/users", users);
-app.use("./api/cuisines", cuisines);
+app.use("/api/categories", categories);
+app.use("/api/groups", groups);
+app.use("/api/ingredients", ingredients);
+app.use("/api/recipes", recipes);
+app.use("/api/users", users);
+app.use("/api/cuisines", cuisines);
 
-mongoose.connect("mongodb://localhost:27017/kitchen-compass");
+mongoose.connect("mongodb://127.0.0.1/kitchen-compass");
 
 let myHeaders = new Headers();
 myHeaders.append("Access-Control-Allow-Origin", "http://localhost:3000");

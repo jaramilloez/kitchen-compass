@@ -16,11 +16,11 @@ const ingredientSchema = new mongoose.Schema({
 const Ingredient = mongoose.model("Ingredient", ingredientSchema);
 
 function validateIngredient(ingredient) {
-  const schema = {
+  const schema = Joi.object({
     name: Joi.string().required(),
     category: Joi.required(),
-  };
-  return Joi.validate(ingredient, schema);
+  });
+  return schema.validate(ingredient);
 }
 
 exports.ingredientSchema = ingredientSchema;

@@ -1,18 +1,22 @@
 const mongoose = require("mongoose");
+const Joi = require("joi");
 
-const cuisineSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
+const cuisineSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+    },
   },
-});
+  { versionKey: false }
+);
 const Cuisine = mongoose.model("Cuisine", cuisineSchema);
 
 function validateCuisine(cuisine) {
-  const schema = {
+  const schema = Joi.object({
     name: Joi.string().required(),
-  };
-  return Joi.validate(cuisine, schema);
+  });
+  return schema.validate(cuisine);
 }
 
 exports.cuisineSchema = cuisineSchema;

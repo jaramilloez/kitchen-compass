@@ -1,18 +1,22 @@
 const mongoose = require("mongoose");
+const Joi = require("joi");
 
-const categorySchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
+const categorySchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+    },
   },
-});
+  { versionKey: false }
+);
 const Category = mongoose.model("Category", categorySchema);
 
 function validateCategory(category) {
-  const schema = {
+  const schema = Joi.object({
     name: Joi.string().required(),
-  };
-  return Joi.validate(category, schema);
+  });
+  return schema.validate(category);
 }
 
 exports.categorySchema = categorySchema;

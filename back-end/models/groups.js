@@ -17,11 +17,11 @@ const groupSchema = new mongoose.Schema({
 const Group = mongoose.model("Group", groupSchema);
 
 function validateGroup(group) {
-  const schema = {
+  const schema = Joi.object({
     code: Joi.string().required().unique().length(6),
     userIds: Joi.array().items(Joi.objectId().required()).required(),
-  };
-  return Joi.validate(group, schema);
+  });
+  return schema.validate(group);
 }
 
 function generateCode(length) {
