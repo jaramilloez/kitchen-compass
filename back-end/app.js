@@ -1,11 +1,12 @@
 const mongoose = require("mongoose");
 const express = require("express");
 
+const cuisines = require("./routes/cuisines");
 const users = require("./routes/users");
 const recipes = require("./routes/recipes");
 const ingredients = require("./routes/ingredients");
 const groups = require("./routes/groups");
-const categories = require("./routes/category");
+const categories = require("./routes/categories");
 
 const fetch = require("node-fetch");
 global.fetch = fetch;
@@ -20,6 +21,7 @@ app.use("./api/groups", groups);
 app.use("./api/ingredients", ingredients);
 app.use("./api/recipes", recipes);
 app.use("./api/users", users);
+app.use("./api/cuisines", cuisines);
 
 mongoose.connect("mongodb://localhost:27017/kitchen-compass");
 

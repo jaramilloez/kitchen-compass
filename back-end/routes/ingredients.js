@@ -1,7 +1,7 @@
 const express = require("express");
 
 const { Ingredient, validate } = require("../models/ingredients");
-const { Category } = require("../models/category");
+const { Category } = require("../models/categories");
 
 const router = express.Router();
 router.get("/", async (req, res) => {

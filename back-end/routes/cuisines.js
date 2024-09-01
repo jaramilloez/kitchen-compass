@@ -1,11 +1,11 @@
 const express = require("express");
 
-const { Category } = require("../models/category");
+const { Cuisine } = require("../models/cuisines");
 
 const router = express.Router();
 router.get("/", async (req, res) => {
-  const categories = await Category.find();
-  res.send(categories);
+  const cuisines = await Cuisine.find();
+  res.send(cuisines);
 });
 
 module.exports = router;
