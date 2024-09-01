@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Joi = require("joi");
 
+const { cuisineSchema } = require("./cuisines");
 const { ingredientSchema } = require("./ingredients");
 
 const recipeSchema = new mongoose.Schema({
@@ -10,6 +11,10 @@ const recipeSchema = new mongoose.Schema({
   },
   description: {
     type: String,
+    required: true,
+  },
+  cuisine: {
+    type: cuisineSchema,
     required: true,
   },
   pic: {

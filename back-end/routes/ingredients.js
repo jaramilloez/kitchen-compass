@@ -18,7 +18,10 @@ router.post("/", async (req, res) => {
 
   const ingredient = new Ingredient({
     name: req.body.name,
-    category: category,
+    category: {
+      _id: category._id,
+      name: category.name,
+    },
   });
 
   try {
@@ -40,7 +43,10 @@ router.put("/:id", async (req, res) => {
   const ingredient = await Ingredient.findByIdAndUpdate(req.params, {
     $set: {
       name: req.body.name,
-      category: category,
+      category: {
+        _id: category._id,
+        name: category.name,
+      },
     },
   });
   if (!ingredient) return res.status(404).send("Ingredient not found.");
