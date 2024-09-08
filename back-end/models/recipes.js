@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 const Joi = require("joi");
 
 const { cuisineSchema } = require("./cuisines");
-const { ingredientSchema } = require("./ingredients");
 
 const recipeSchema = new mongoose.Schema({
   name: {
@@ -21,12 +20,16 @@ const recipeSchema = new mongoose.Schema({
     type: Buffer,
     required: true,
   },
-  directions: {
-    type: [String],
+  servings: {
+    type: Number,
     required: true,
   },
-  ingredients: {
+  recipeIngredients: {
     type: [ingredientSchema],
+    required: true,
+  },
+  directions: {
+    type: [String],
     required: true,
   },
 });
@@ -37,8 +40,9 @@ function validateRecipe(recipe) {
     name: Joi.string().required(),
     description: Joi.string().required(),
     pic: Joi.buffer().required(),
-    directions: Joi.array().items(Joi.string().required()).required(),
+    servings: Joi.Number().required(),
     ingredients: Joi.array().items(Joi.required()).required(),
+    directions: Joi.array().items(Joi.string().required()).required(),
   });
   return schema.validate(recipe);
 }
