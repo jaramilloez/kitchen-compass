@@ -5,6 +5,7 @@ import SignUp from "./components/signUp";
 import LogIn from "./components/logIn";
 import Home from "./components/home";
 import NavBar from "./components/navBar";
+import "react-toastify/dist/ReactToastify.css";
 import "./index.css";
 
 class App extends Component {
