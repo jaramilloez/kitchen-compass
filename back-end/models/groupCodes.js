@@ -2,26 +2,21 @@ const mongoose = require("mongoose");
 const Joi = require("joi");
 Joi.objectId = require("joi-objectid")(Joi);
 
-const groupSchema = new mongoose.Schema({
+const groupCodeSchema = new mongoose.Schema({
   code: {
     type: String,
     required: true,
     unique: true,
     length: 6,
   },
-  userIds: {
-    type: [String],
-    required: true,
-  },
 });
-const Group = mongoose.model("Group", groupSchema);
+const GroupCode = mongoose.model("Group Code", groupCodeSchema);
 
-function validateGroup(group) {
+function validateGroupCode(groupCode) {
   const schema = Joi.object({
     code: Joi.string().required().unique().length(6),
-    userIds: Joi.array().items(Joi.objectId().required()).required(),
   });
-  return schema.validate(group);
+  return schema.validate(groupCode);
 }
 
 function generateCode(length) {
@@ -33,6 +28,6 @@ function generateCode(length) {
   return code;
 }
 
-exports.Group = Group;
-exports.validate = validateGroup;
+exports.GroupCode = GroupCode;
+exports.validate = validateGroupCode;
 exports.generateCode = generateCode;
