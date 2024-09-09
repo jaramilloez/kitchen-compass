@@ -6,7 +6,6 @@ const unitSchema = new mongoose.Schema(
     name: {
       type: String,
       required: true,
-      max: 5,
     },
   },
   { versionKey: false }
@@ -15,7 +14,7 @@ const Unit = mongoose.model("Unit", unitSchema);
 
 function validateUnit(unit) {
   const schema = Joi.object({
-    name: Joi.string().required().max(5),
+    name: Joi.string().required(),
   });
   return schema.validate(unit);
 }
