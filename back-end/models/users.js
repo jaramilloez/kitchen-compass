@@ -25,18 +25,40 @@ const userSchema = new mongoose.Schema({
     required: false,
   },
 });
-const User = mongoose.model("User", userSchema);
 
 function validateUser(user) {
   const schema = Joi.object({
     name: Joi.string().required(),
-    email: Joi.email().required(),
-    password: Joi.String().required(),
+    email: Joi.string().required().email(),
+    password: Joi.string().required(),
     groupId: Joi.objectId(),
     customRecipeIds: Joi.array().items(Joi.objectId),
   });
   return schema.validate(user);
 }
 
+userSchema.methods.generateAuthToken = function () {
+  const token = jwt.sign(
+    {
+      _id: this._id,
+      name: this.name,
+      email: this.email,
+    },
+    "jwtPrivateKey"
+  );
+  return token;
+};
+
+function validateAuth(req) {
+  const schema = Joi.object({
+    email: Joi.string().required().email(),
+    password: Joi.string().required(),
+  });
+  return schema.validate(req);
+}
+
+const User = mongoose.model("User", userSchema);
+
 exports.User = User;
 exports.validate = validateUser;
+exports.validateAuth = validateAuth;

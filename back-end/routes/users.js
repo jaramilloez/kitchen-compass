@@ -1,8 +1,8 @@
 const express = require("express");
-const bcrypt = require("bcrypt");
 const _ = require("lodash");
+const bcrypt = require("bcrypt");
 
-const { User, validate } = require("../models/users");
+const { User, validate, validateAuth } = require("../models/users");
 
 const router = express.Router();
 router.get("/:id", async (req, res) => {
@@ -26,6 +26,21 @@ router.post("/", async (req, res) => {
     .header("auth", token)
     .header("access-control-expose-headers", "auth")
     .send(_.pick(user, ["_id", "name", "email"]));
+});
+
+router.post("/auth", async (req, res) => {
+  const { error } = validateAuth(req.body);
+  if (error) return res.status(400).send(error.details[0].message);
+
+  const { email, password } = req.body;
+
+  let user = await User.findOne({ email: email });
+  const validPassword = await bcrypt.compare(req.body.password, user.password);
+  if (!user || !validPassword)
+    return res.status(400).send("Invalid email or password.");
+
+  const token = user.generateAuthToken();
+  res.send(token);
 });
 
 router.put("/:id", async (req, res) => {
