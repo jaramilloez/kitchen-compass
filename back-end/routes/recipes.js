@@ -17,10 +17,12 @@ router.post("/", async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
+  const { name, description, pic } = req.body;
+
   const recipe = new Recipe({
-    name: req.body.name,
-    description: req.body.description,
-    pic: req.body.pic,
+    name: name,
+    description: description,
+    pic: pic,
     directions: req.body.directions,
   });
 
@@ -37,11 +39,13 @@ router.put("/:id", async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
+  const { name, description, pic } = req.body;
+
   const recipe = await Recipe.findByIdAndUpdate(req.params.id, {
     $set: {
-      name: req.body.name,
-      description: req.body.description,
-      pic: req.body.pic,
+      name: name,
+      description: description,
+      pic: pic,
       directions: req.body.directions,
     },
   });

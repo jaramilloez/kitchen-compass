@@ -32,7 +32,10 @@ router.post("/", async (req, res) => {
     ingredientId: ingredientId,
     recipeId: recipeId,
     amount: amount,
-    unit: unitObj,
+    unit: {
+      _id: unitObj._id,
+      name: unitObj.name,
+    },
   });
 
   try {
@@ -66,7 +69,10 @@ router.put("/:id", async (req, res) => {
         ingredientId: ingredientId,
         recipeId: recipeId,
         amount: amount,
-        unit: unitObj,
+        unit: {
+          _id: unitObj._id,
+          name: unitObj.name,
+        },
       },
     }
   );

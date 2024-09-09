@@ -13,14 +13,16 @@ router.post("/", async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
-  const category = await Category.findById(req.body.category);
-  if (!category) return res.status(400).send("Invalid category.");
+  const { name, category } = req.body;
+
+  const categoryObj = await Category.findById(category);
+  if (!categoryObj) return res.status(400).send("Invalid category.");
 
   const ingredient = new Ingredient({
-    name: req.body.name,
+    name: name,
     category: {
-      _id: category._id,
-      name: category.name,
+      _id: categoryObj._id,
+      name: categoryObj.name,
     },
   });
 
@@ -37,15 +39,17 @@ router.put("/:id", async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
-  const category = await Category.findById(req.body.category);
-  if (!category) return res.status(400).send("Invalid category.");
+  const { name, category } = req.body;
+
+  const categoryObj = await Category.findById(category);
+  if (!categoryObj) return res.status(400).send("Invalid category.");
 
   const ingredient = await Ingredient.findByIdAndUpdate(req.params.id, {
     $set: {
-      name: req.body.name,
+      name: name,
       category: {
-        _id: category._id,
-        name: category.name,
+        _id: categoryObj._id,
+        name: categoryObj.name,
       },
     },
   });
