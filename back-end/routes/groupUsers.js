@@ -19,7 +19,7 @@ router.post("/", async (req, res) => {
   const group = await Group.findById(groupId);
   if (!group) return res.status(400).send("Invalid group.");
 
-  const user = await Group.findById(userId);
+  const user = await User.findById(userId);
   if (!user) return res.status(400).send("Invalid user.");
 
   const groupUser = new GroupUser({
