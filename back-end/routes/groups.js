@@ -1,11 +1,11 @@
 const express = require("express");
 
-const { GroupCode, validate, generateCode } = require("../models/groupCodes");
+const { Group, validate, generateCode } = require("../models/groups");
 
 const router = express.Router();
 router.get("/:id", async (req, res) => {
-  const groupCode = await GroupCode.findById(req.params.id);
-  res.send(groupCode);
+  const group = await Group.findById(req.params.id);
+  res.send(group);
 });
 
 router.post("/", async (req, res) => {
@@ -16,15 +16,15 @@ router.post("/", async (req, res) => {
   let duplicate;
   while (code === duplicate) {
     code = generateCode(6);
-    duplicate = await GroupCode.findOne({ code });
+    duplicate = await Group.findOne({ code });
   }
 
-  const groupCode = new GroupCode({
+  const group = new Group({
     code: code,
   });
 
   try {
-    const result = await groupCode.save();
+    const result = await group.save();
     res.send(result);
     console.log(result);
   } catch (ex) {
@@ -40,22 +40,22 @@ router.put("/:id", async (req, res) => {
   let duplicate;
   while (code === duplicate) {
     code = generateCode(6);
-    duplicate = await GroupCode.findOne({ code });
+    duplicate = await Group.findOne({ code });
   }
 
-  const groupCode = await GroupCode.findByIdAndUpdate(req.params.id, {
+  const group = await Group.findByIdAndUpdate(req.params.id, {
     $set: {
       code: code,
     },
   });
-  if (!groupCode) return res.status(404).send("Group code not found.");
-  res.send(groupCode);
+  if (!group) return res.status(404).send("Group not found.");
+  res.send(group);
 });
 
 router.delete("/:id", async (req, res) => {
-  const groupCode = await GroupCode.findByIdAndDelete(req.params.id);
-  if (!groupCode) return res.status(404).send("Group code not found.");
-  res.send(groupCode);
+  const group = await Group.findByIdAndDelete(req.params.id);
+  if (!group) return res.status(404).send("Group not found.");
+  res.send(group);
 });
 
 module.exports = router;
