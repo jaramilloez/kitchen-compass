@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const express = require("express");
+const fs = require("fs");
 
+const TestApplication = require("./middleware/logger");
 const units = require("./routes/units");
 const recipeIngredients = require("./routes/recipeIngredients");
 const groupUsers = require("./routes/groupUsers");
@@ -35,6 +37,18 @@ mongoose.connect("mongodb://127.0.0.1/kitchen-compass");
 
 let myHeaders = new Headers();
 myHeaders.append("Access-Control-Allow-Origin", "http://localhost:3000");
+
+const testapplication = new TestApplication();
+testapplication.on("loadApplication", (arg) => {
+  fs.appendFile("log.txt", "Application loaded!\n", (err) => {
+    if (err) {
+      throw err;
+    } else {
+      console.log(arg);
+    }
+  });
+});
+testapplication.loadApplication("Application is Loading...");
 
 const port = process.env.PORT || 3001;
 app.listen(port, () => console.log(`Listening on port ${port}...`));
