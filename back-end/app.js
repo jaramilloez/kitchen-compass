@@ -1,6 +1,10 @@
 const mongoose = require("mongoose");
 const express = require("express");
 
+const units = require("./routes/units");
+const recipeIngredients = require("./routes/recipeIngredients");
+const groupUsers = require("./routes/groupUsers");
+const directions = require("./routes/directions");
 const cuisines = require("./routes/cuisines");
 const users = require("./routes/users");
 const recipes = require("./routes/recipes");
@@ -22,6 +26,10 @@ app.use("/api/ingredients", ingredients);
 app.use("/api/recipes", recipes);
 app.use("/api/users", users);
 app.use("/api/cuisines", cuisines);
+app.use("/api/directions", directions);
+app.use("/api/groupUsers", groupUsers);
+app.use("/api/recipeIngredients", recipeIngredients);
+app.use("/api/units", units);
 
 mongoose.connect("mongodb://127.0.0.1/kitchen-compass");
 
