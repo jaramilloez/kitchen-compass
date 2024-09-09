@@ -1,5 +1,6 @@
 const express = require("express");
 
+const { Cuisine } = require("../models/cuisines");
 const { Recipe, validate } = require("../models/recipes");
 
 const router = express.Router();
@@ -17,13 +18,20 @@ router.post("/", async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
-  const { name, description, pic } = req.body;
+  const { name, description, servings, cuisine, pic } = req.body;
+
+  const cuisineObj = await Cuisine.findById(cuisine);
+  if (!cuisineObj) return res.status(400).send("Invalid cuisine.");
 
   const recipe = new Recipe({
     name: name,
     description: description,
+    servings: servings,
+    cuisine: {
+      _id: cuisineObj._id,
+      name: cuisineObj.name,
+    },
     pic: pic,
-    directions: req.body.directions,
   });
 
   try {
@@ -39,14 +47,21 @@ router.put("/:id", async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
-  const { name, description, pic } = req.body;
+  const { name, description, servings, cuisine, pic } = req.body;
+
+  const cuisineObj = await Cuisine.findById(cuisine);
+  if (!cuisineObj) return res.status(400).send("Invalid cuisine.");
 
   const recipe = await Recipe.findByIdAndUpdate(req.params.id, {
     $set: {
       name: name,
       description: description,
+      servings: servings,
+      cuisine: {
+        _id: cuisineObj._id,
+        name: cuisineObj.name,
+      },
       pic: pic,
-      directions: req.body.directions,
     },
   });
   if (!recipe) return res.status(404).send("Recipe not found.");

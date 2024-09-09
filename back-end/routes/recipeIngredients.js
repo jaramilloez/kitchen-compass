@@ -19,11 +19,11 @@ router.post("/", async (req, res) => {
 
   const { ingredientId, recipeId, amount, unit } = req.body;
 
-  const validIngredient = await Ingredient.findById(ingredientId);
-  if (!validIngredient) return res.status(400).send("Invalid ingredient.");
+  const ingredient = await Ingredient.findById(ingredientId);
+  if (!ingredient) return res.status(400).send("Invalid ingredient.");
 
-  const validRecipe = await Recipe.findById(recipeId);
-  if (!validRecipe) return res.status(400).send("Invalid recipe.");
+  const recipe = await Recipe.findById(recipeId);
+  if (!recipe) return res.status(400).send("Invalid recipe.");
 
   const unitObj = await Unit.findById(unit);
   if (!unitObj) return res.status(400).send("Invalid unit.");
@@ -53,11 +53,11 @@ router.put("/:id", async (req, res) => {
 
   const { ingredientId, recipeId, amount, unit } = req.body;
 
-  const validIngredient = await Ingredient.findById(ingredientId);
-  if (!validIngredient) return res.status(400).send("Invalid ingredient.");
+  const ingredient = await Ingredient.findById(ingredientId);
+  if (!ingredient) return res.status(400).send("Invalid ingredient.");
 
-  const validRecipe = await Recipe.findById(recipeId);
-  if (!validRecipe) return res.status(400).send("Invalid recipe.");
+  const recipe = await Recipe.findById(recipeId);
+  if (!recipe) return res.status(400).send("Invalid recipe.");
 
   const unitObj = await Unit.findById(unit);
   if (!unitObj) return res.status(400).send("Invalid unit.");
@@ -85,7 +85,8 @@ router.delete("/:id", async (req, res) => {
   const recipeIngredient = await RecipeIngredient.findByIdAndDelete(
     req.params.id
   );
-  if (!recipeIngredient) return res.status(404).send("Ingredient not found.");
+  if (!recipeIngredient)
+    return res.status(404).send("Recipe ingredient relationship not found.");
   res.send(recipeIngredient);
 });
 
