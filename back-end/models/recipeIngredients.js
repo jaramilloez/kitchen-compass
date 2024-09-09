@@ -14,8 +14,11 @@ const recipeIngredientSchema = new mongoose.Schema({
     required: true,
   },
   amount: {
-    type: Number,
+    type: String,
     required: true,
+    match: /\d+(?:\.\d+)?|\d\/\d/,
+    message:
+      "The amount must be a valid number or fraction with format 1, 1.2, or 1/2",
   },
   unit: {
     type: unitSchema,
@@ -31,7 +34,12 @@ function validateRecipeIngredient(recipeIngredient) {
   const schema = Joi.object({
     ingredientId: Joi.objectId().required(),
     recipeId: Joi.objectId().required(),
-    amount: Joi.number().required(),
+    amount: Joi.string()
+      .required()
+      .regex(/\d+(?:\.\d+)?|\d\/\d/)
+      .message(
+        "The amount must be a valid number or fraction with format 1, 1.2, or 1/2"
+      ),
     unit: Joi.objectId().required(),
   });
   return schema.validate(recipeIngredient);

@@ -40,7 +40,7 @@ router.put("/:id", async (req, res) => {
   const category = await Category.findById(req.body.category);
   if (!category) return res.status(400).send("Invalid category.");
 
-  const ingredient = await Ingredient.findByIdAndUpdate(req.params, {
+  const ingredient = await Ingredient.findByIdAndUpdate(req.params.id, {
     $set: {
       name: req.body.name,
       category: {

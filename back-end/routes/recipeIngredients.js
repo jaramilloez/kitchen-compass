@@ -6,8 +6,10 @@ const { Ingredient } = require("../models/ingredients");
 const { RecipeIngredient, validate } = require("../models/recipeIngredients");
 
 const router = express.Router();
-router.get("/:id", async (req, res) => {
-  const recipeIngredients = await RecipeIngredient.find({ recipeId: req.body });
+router.get("/:recipeId", async (req, res) => {
+  const recipeIngredients = await RecipeIngredient.find({
+    recipeId: req.params.recipeId,
+  });
   res.send(recipeIngredients);
 });
 
@@ -58,7 +60,7 @@ router.put("/:id", async (req, res) => {
   if (!unitObj) return res.status(400).send("Invalid unit.");
 
   const recipeIngredient = await RecipeIngredient.findByIdAndUpdate(
-    req.params,
+    req.params.id,
     {
       $set: {
         ingredientId: ingredientId,
