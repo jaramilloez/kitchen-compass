@@ -28,6 +28,8 @@ router.post("/", async (req, res) => {
     .send(_.pick(user, ["_id", "name", "email"]));
 });
 
+//Checks the request's email and password.
+//If they're correct, an auth token is generated and sent.
 router.post("/auth", async (req, res) => {
   const { error } = validateAuth(req.body);
   if (error) return res.status(400).send(error.details[0].message);
@@ -35,7 +37,7 @@ router.post("/auth", async (req, res) => {
   const { email, password } = req.body;
 
   let user = await User.findOne({ email: email });
-  const validPassword = await bcrypt.compare(req.body.password, user.password);
+  const validPassword = await bcrypt.compare(password, user.password);
   if (!user || !validPassword)
     return res.status(400).send("Invalid email or password.");
 
