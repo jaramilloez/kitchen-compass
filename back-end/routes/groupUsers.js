@@ -36,10 +36,11 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.delete("/:id", async (req, res) => {
-  const groupUser = await GroupUser.findByIdAndDelete(req.params.id);
+router.delete("/:userId", async (req, res) => {
+  const groupUser = await GroupUser.find({ userId: req.params.userId });
   if (!groupUser)
     return res.status(404).send("Group user relationship not found.");
+  await GroupUser.deleteOne(groupUser._id);
   res.send(groupUser);
 });
 
