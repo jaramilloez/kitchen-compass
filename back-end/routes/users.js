@@ -7,6 +7,7 @@ const { User, validate, validateAuth } = require("../models/users");
 const router = express.Router();
 router.get("/:id", async (req, res) => {
   const user = await User.findById(req.params.id);
+  if (!user) res.status(404).send("User not found.");
   res.send(user);
 });
 

@@ -6,6 +6,7 @@ const { Direction, validate } = require("../models/directions");
 const router = express.Router();
 router.get("/:recipeId", async (req, res) => {
   const directions = await Direction.find({ recipeId: req.params.recipeId });
+  if (!directions) return res.status(404).send("Directions not found.");
   res.send(directions);
 });
 

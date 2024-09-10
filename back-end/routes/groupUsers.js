@@ -7,6 +7,8 @@ const { GroupUser, validate } = require("../models/groupUsers");
 const router = express.Router();
 router.get("/:userId", async (req, res) => {
   const groupUser = await GroupUser.find({ groupId: req.params.userId });
+  if (!groupUser)
+    return res.status(404).send("Group user relationship not found.");
   res.send(groupUser);
 });
 

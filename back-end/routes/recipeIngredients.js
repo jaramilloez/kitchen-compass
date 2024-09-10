@@ -10,6 +10,8 @@ router.get("/:recipeId", async (req, res) => {
   const recipeIngredients = await RecipeIngredient.find({
     recipeId: req.params.recipeId,
   });
+  if (!recipeIngredient)
+    return res.status(404).send("Ingredient to recipe relationship not found.");
   res.send(recipeIngredients);
 });
 

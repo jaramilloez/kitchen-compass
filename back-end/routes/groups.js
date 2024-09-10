@@ -5,6 +5,7 @@ const { Group, validate, generateCode } = require("../models/groups");
 const router = express.Router();
 router.get("/:id", async (req, res) => {
   const group = await Group.findById(req.params.id);
+  if (!group) return res.status(404).send("Group not found.");
   res.send(group);
 });
 
