@@ -53,4 +53,10 @@ router.put("/:id", async (req, res) => {
   res.send(direction);
 });
 
+router.delete("/:id", async (req, res) => {
+  const direction = await Direction.findByIdAndDelete(req.params.id);
+  if (!direction) return res.status(404).send("Direction not found.");
+  res.send(direction);
+});
+
 module.exports = router;
