@@ -6,6 +6,33 @@ body {
   padding: 0 0.25rem;
 }
 
+.bgLightGray {
+  background-color: rgb(240, 240, 240);
+}
+
+.pointerHover:hover {
+  cursor: pointer;
+}
+
+.underlineAnimation {
+  position: relative;
+}
+.underlineAnimation::after {
+  content: "";
+  position: absolute;
+  height: 2px;
+  left: 0;
+  bottom: 15%;
+  width: 0;
+  background-color: black;
+  transition: width 0.2s;
+}
+.underlineAnimation:hover::after {
+  width: 100%;
+}
+
+/* | Nav | */
+
 .navbar-toggler:focus {
   box-shadow: none;
 }
@@ -34,6 +61,19 @@ body {
   height: 100%;
 }
 
+.filterItem {
+  background-color: rgb(240, 240, 240);
+}
+
+.filterItem:hover {
+  background-color: white;
+  transition: all 0.3s;
+}
+
+.list-group {
+  border-radius: 0;
+}
+
 /* | Log In or Sign Up | */
 
 @media (min-width: 758px) {
@@ -43,20 +83,4 @@ body {
   .form-floating {
     width: 40vw;
   }
-}
-.linkLine {
-  position: relative;
-}
-.linkLine::after {
-  content: "";
-  position: absolute;
-  height: 2px;
-  left: 0;
-  bottom: 15%;
-  width: 0;
-  background-color: black;
-  transition: width 0.2s;
-}
-.linkLine:hover::after {
-  width: 100%;
 }

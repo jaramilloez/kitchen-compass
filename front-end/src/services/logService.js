@@ -2,6 +2,5 @@ function log(error) {
   console.log(error);
 }
 
-export default {
-  log,
-};
+const logger = log;
+export default logger;

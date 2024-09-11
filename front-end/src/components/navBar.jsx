@@ -35,12 +35,12 @@ class NavBar extends Component {
                   />
                 </li>
                 <li className="nav-item ms-sm-2">
-                  <Link to="/sign-up" className="linkLine nav-link">
+                  <Link to="/sign-up" className="underlineAnimation nav-link">
                     Sign Up
                   </Link>
                 </li>
                 <li className="nav-item ms-sm-2">
-                  <Link to="/log-in" className="linkLine nav-link">
+                  <Link to="/log-in" className="underlineAnimation nav-link">
                     Log In
                   </Link>
                 </li>

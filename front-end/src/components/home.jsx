@@ -8,7 +8,7 @@ class Home extends Component {
   componentDidMount = {};
   render() {
     return (
-      <div>
+      <div className="py-4">
         <Hero />
         <Recipes />
       </div>

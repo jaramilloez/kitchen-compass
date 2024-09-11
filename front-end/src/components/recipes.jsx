@@ -1,76 +1,50 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { Component } from "react";
+import { getRecipes } from "../services/recipesService";
+import { getIngredients } from "../services/ingredientsService";
+import { getCuisines } from "../services/cuisinesService";
+import RecipeFilters from "./recipeFilters";
+import RecipeCards from "./recipeCards";
 
-const Recipes = () => {
-  return (
-    <div className="container bg-white p-4 rounded-1 shadow">
-      <div className="row flex-wrap">
-        <Link
-          to="/recipe"
-          className="col-md-4 col-6 d-flex justify-content-center text-decoration-none p-2"
-        >
-          <div className="recipeCard card border-0">
-            <div className="position-relative">
-              <img
-                className="card-img-top"
-                src={require("../images/spaghetti.jpg")}
-                alt="Spaghetti"
-              />
-              <div className="cardDrawer bg-light position-absolute fs-5 opacity-75 w-100 p-3 overflow-hidden z-0">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              </div>
-            </div>
-            <div className="card-body bg-light rounded-bottom-2 py-2 z-1">
-              <div className="card-title fs-4">Spaghetti</div>
-            </div>
-          </div>
-        </Link>
-        <Link
-          to="/recipe"
-          className="col-md-4 col-6 d-flex justify-content-center text-decoration-none p-2"
-        >
-          <div className="recipeCard card border-0">
-            <div className="position-relative">
-              <img
-                className="card-img-top"
-                src={require("../images/spaghetti.jpg")}
-                alt="Spaghetti"
-              />
-              <div className="cardDrawer bg-light position-absolute fs-5 opacity-75 w-100 p-3 overflow-hidden z-0">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              </div>
-            </div>
-            <div className="card-body bg-light rounded-bottom-2 py-2 z-1">
-              <div className="card-title fs-4">Spaghetti</div>
-            </div>
-          </div>
-        </Link>
-        <Link
-          to="/recipe"
-          className="col-md-4 col-6 d-flex justify-content-center text-decoration-none p-2"
-        >
-          <div className="recipeCard card border-0">
-            <div className="position-relative">
-              <img
-                className="card-img-top"
-                src={require("../images/spaghetti.jpg")}
-                alt="Spaghetti"
-              />
-              <div className="cardDrawer bg-light position-absolute fs-5 opacity-75 w-100 p-3 overflow-hidden z-0">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              </div>
-            </div>
-            <div className="card-body bg-light rounded-bottom-2 py-2 z-1">
-              <div className="card-title fs-4">Spaghetti</div>
-            </div>
-          </div>
-        </Link>
+class Recipes extends Component {
+  state = {
+    recipes: [],
+    cuisines: [],
+    ingredients: [],
+    pageSize: 30,
+    currentPage: 1,
+  };
+
+  async componentDidMount() {
+    const { data: recipes } = await getRecipes();
+    const { data: cuisines } = await getCuisines();
+    const cuisinesWAll = [{ _id: null, name: "All" }, ...cuisines];
+    const { data: ingredients } = await getIngredients();
+    const ingredientsWAll = [{ _id: null, name: "All" }, ...ingredients];
+    this.setState({
+      recipes,
+      cuisines: cuisinesWAll,
+      ingredients: ingredientsWAll,
+    });
+  }
+
+  handleFilterSelect = (filter) => {
+    this.setState({ selectedFilter: filter, currentPage: 1 });
+  };
+  render() {
+    const { cuisines, ingredients, selectedFilter } = this.state;
+    return (
+      <div className="container shadow rounded-1 bg-white">
+        <div className="row flex-wrap">
+          <RecipeFilters
+            filters={cuisines}
+            selectedFilter={selectedFilter}
+            onFilterSelect={this.handleFilterSelect}
+          />
+          <RecipeCards />
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
 export default Recipes;
