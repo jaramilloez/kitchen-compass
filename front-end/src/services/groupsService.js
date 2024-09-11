@@ -19,6 +19,6 @@ export function saveGroup(group) {
   }
 }
 
-export function deleteGroup(groupId) {
-  return http.delete(groupUrl(groupId));
+export function deleteGroup(id) {
+  return http.delete(groupUrl(id));
 }
