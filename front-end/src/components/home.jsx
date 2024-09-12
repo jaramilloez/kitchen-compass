@@ -8,10 +8,10 @@ class Home extends Component {
   componentDidMount = {};
   render() {
     return (
-      <div className="py-4">
+      <React.Fragment>
         <Hero />
         <Recipes />
-      </div>
+      </React.Fragment>
     );
   }
 }

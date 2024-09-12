@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { ToastContainer } from "react-toastify";
 import { Route, Switch, Redirect } from "react-router-dom";
+import NotFound from "./components/notFound";
 import Profile from "./components/profile";
 import { getCurrentUser } from "./services/authService";
 import SignUp from "./components/signUp";
@@ -25,7 +26,9 @@ class App extends Component {
           <Route path="/profile" component={Profile} />
           <Route path="/log-in" component={LogIn} />
           <Route path="/sign-up" component={SignUp} />
+          <Route path="/not-found" component={NotFound} />
           <Route path="/" exact component={Home} />
+          <Redirect to="/not-found" />
         </Switch>
       </React.Fragment>
     );

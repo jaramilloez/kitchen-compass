@@ -25,7 +25,14 @@ const NavBar = ({ user }) => {
           id="hamburger"
           className="collapse navbar-collapse text-end w-100 justify-content-end"
         >
-          <ul className="navbar-nav fs-6">
+          <ul className="navbar-nav fs-6 text-nowrap">
+            <li className="nav-item mx-sm-1">
+              <input
+                type="text"
+                placeholder="Search"
+                className="form-control"
+              />
+            </li>
             {!user && (
               <React.Fragment>
                 <li className="nav-item ms-sm-2">
@@ -42,13 +49,6 @@ const NavBar = ({ user }) => {
             )}
             {user && (
               <React.Fragment>
-                <li className="nav-item mx-sm-1">
-                  <input
-                    type="text"
-                    placeholder="Search"
-                    className="form-control"
-                  />
-                </li>
                 <li className="nav-item ms-sm-2 nav-link text-black">
                   Welcome, {user.name}
                 </li>

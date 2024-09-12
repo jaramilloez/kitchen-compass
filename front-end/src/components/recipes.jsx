@@ -33,7 +33,7 @@ class Recipes extends Component {
   render() {
     const { cuisines, ingredients, selectedFilter } = this.state;
     return (
-      <div className="container shadow rounded-1 bg-white">
+      <div className="container shadow rounded-1 bg-white my-4">
         <div className="row flex-wrap">
           <RecipeFilters
             filters={cuisines}
