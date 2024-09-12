@@ -1,6 +1,7 @@
 import React from "react";
 import Joi from "joi-browser";
 import { Link } from "react-router-dom";
+import { logIn } from "../services/authService";
 import Form from "./common/form";
 
 class LogIn extends Form {
@@ -17,10 +18,21 @@ class LogIn extends Form {
     password: Joi.string().required().label("Password").min(8),
   };
 
-  onSubmit = () => {
-    console.log("User verified in DB using JWT. ");
-    this.props.history.push("/");
+  doSubmit = async () => {
+    try {
+      const { data } = this.state;
+
+      await logIn(data.email, data.password);
+      window.location = "/";
+    } catch (ex) {
+      if (ex.response && ex.response.status === 400) {
+        const errors = { ...this.state.errors };
+        errors.email = ex.response.data;
+        this.setState({ errors });
+      }
+    }
   };
+
   render() {
     return (
       <div
