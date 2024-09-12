@@ -18,12 +18,19 @@ class App extends Component {
     this.setState({ user });
   }
   render() {
+    const { user } = this.state;
     return (
       <React.Fragment>
         <ToastContainer />
-        <NavBar user={this.state.user} />
+        <NavBar user={user} />
         <Switch>
-          <Route path="/profile" component={Profile} />
+          <Route
+            path="/profile"
+            render={() => {
+              if (user) return <Profile />;
+              else return <Redirect to="/log-in" />;
+            }}
+          />
           <Route path="/log-in" component={LogIn} />
           <Route path="/sign-up" component={SignUp} />
           <Route path="/not-found" component={NotFound} />

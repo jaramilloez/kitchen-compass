@@ -6,7 +6,7 @@ const NotFound = () => {
       <div className="fs-1 bold">Not Found :(</div>
       <img
         src={require("../images/crumbs.png")}
-        alt="A picture of a plate with only crumbs."
+        alt="A plate with only crumbs."
         style={{ height: "50vh" }}
       />
     </div>
