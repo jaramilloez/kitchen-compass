@@ -1,6 +1,8 @@
 import React from "react";
 import Joi from "joi-browser";
 import { Link } from "react-router-dom";
+import { jwtLogIn } from "../services/authService";
+import { signUp } from "../services/usersService";
 import Form from "./common/form";
 
 class SignUp extends Form {
@@ -19,9 +21,20 @@ class SignUp extends Form {
     password: Joi.string().required().label("Password").min(8),
   };
 
-  doSubmit = () => {
-    console.log("User added to DB and given a JWT.");
-    this.props.history.push("/");
+  doSubmit = async () => {
+    try {
+      const response = await signUp(this.state.data);
+      console.log(response);
+      jwtLogIn(response.headers["auth"]);
+      window.location = "/";
+    } catch (ex) {
+      if (ex.response && ex.response.status === 400) {
+        const errors = { ...this.state.errors };
+        errors.email = ex.response.data;
+        console.log(errors);
+        this.setState({ errors });
+      }
+    }
   };
 
   render() {

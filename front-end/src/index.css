@@ -31,17 +31,6 @@ body {
   width: 100%;
 }
 
-/* | Nav | */
-
-.navbar-toggler:focus {
-  box-shadow: none;
-}
-
-.form-control:focus {
-  box-shadow: none;
-  border-color: black;
-}
-
 /* | Home | */
 
 .recipeCard:hover {
@@ -72,6 +61,15 @@ body {
 
 .list-group {
   border-radius: 0;
+}
+
+.navbar-toggler:focus {
+  box-shadow: none;
+}
+
+.form-control:focus {
+  box-shadow: none;
+  border-color: black;
 }
 
 /* | Log In or Sign Up | */

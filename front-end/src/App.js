@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { ToastContainer } from "react-toastify";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
+import Profile from "./components/profile";
+import { getCurrentUser } from "./services/authService";
 import SignUp from "./components/signUp";
 import LogIn from "./components/logIn";
 import Home from "./components/home";
@@ -9,19 +11,22 @@ import "react-toastify/dist/ReactToastify.css";
 import "./index.css";
 
 class App extends Component {
+  state = {};
+  async componentDidMount() {
+    const user = getCurrentUser();
+    this.setState({ user });
+  }
   render() {
     return (
       <React.Fragment>
         <ToastContainer />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<NavBar />}>
-              <Route index element={<Home />} />
-              <Route path="/log-in" element={<LogIn />} />
-              <Route path="/sign-up" element={<SignUp />} />
-            </Route>
-          </Routes>
-        </BrowserRouter>
+        <NavBar user={this.state.user} />
+        <Switch>
+          <Route path="/profile" component={Profile} />
+          <Route path="/log-in" component={LogIn} />
+          <Route path="/sign-up" component={SignUp} />
+          <Route path="/" exact component={Home} />
+        </Switch>
       </React.Fragment>
     );
   }

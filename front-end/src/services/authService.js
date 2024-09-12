@@ -1,6 +1,6 @@
-import { jwtDecode } from "jwt-decode";
 import config from "../config.json";
 import http from "./httpService";
+import { jwtDecode } from "jwt-decode";
 
 const apiEndpoint = config.apiUrl + "/users/auth";
 const tokenKey = "token";
@@ -22,9 +22,7 @@ export function getCurrentUser() {
   try {
     const jwt = localStorage.getItem("token");
     return jwtDecode(jwt);
-  } catch (ex) {
-    for (field in ex.errors) console.log(ex.errors[field].message);
-  }
+  } catch (ex) {}
 }
 
 //Immedietly after a user signs up

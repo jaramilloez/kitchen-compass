@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Joi = require("joi");
 Joi.objectId = require("joi-objectid")(Joi);
+const jwt = require("jsonwebtoken");
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -16,14 +17,6 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  groupId: {
-    type: String,
-    required: false,
-  },
-  customRecipeIds: {
-    type: [String],
-    required: false,
-  },
 });
 
 function validateUser(user) {
@@ -31,8 +24,6 @@ function validateUser(user) {
     name: Joi.string().required(),
     email: Joi.string().required().email(),
     password: Joi.string().required(),
-    groupId: Joi.objectId(),
-    customRecipeIds: Joi.array().items(Joi.objectId),
   });
   return schema.validate(user);
 }
