@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserGroup } from "@fortawesome/free-solid-svg-icons";
+import { logOut } from "../services/authService";
 
 const NavBar = ({ user }) => {
   return (
@@ -57,6 +58,17 @@ const NavBar = ({ user }) => {
                     <FontAwesomeIcon icon={faUserGroup} className="pe-1" />{" "}
                     Group
                   </Link>
+                </li>
+                <li className="nav-item ms-sm-2">
+                  <button
+                    onClick={() => {
+                      logOut();
+                      window.location = "/";
+                    }}
+                    className="btn btn-dark py-1"
+                  >
+                    Log Out
+                  </button>
                 </li>
               </React.Fragment>
             )}

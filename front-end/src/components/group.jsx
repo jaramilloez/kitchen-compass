@@ -3,7 +3,6 @@ import { getUser } from "../services/usersService";
 import { getGroup } from "../services/groupsService";
 import { getGroupUser, getGroupUsers } from "../services/groupUsersService";
 import Form from "./common/form";
-import { logOut } from "../services/authService";
 
 class Group extends Form {
   state = {
@@ -34,18 +33,7 @@ class Group extends Form {
   render() {
     return (
       <div className="container shadow rounded-1 bg-white my-4 p-4">
-        <div className="container col">
-          {this.renderTitle("Group")}
-          <button
-            onClick={() => {
-              logOut();
-              window.location = "/";
-            }}
-            className="btn btn-dark"
-          >
-            Log Out
-          </button>
-        </div>
+        <div className="container col">{this.renderTitle("Group")}</div>
         <div className="container col"></div>
       </div>
     );
