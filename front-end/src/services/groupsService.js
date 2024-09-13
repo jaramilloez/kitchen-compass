@@ -11,6 +11,10 @@ export function getGroup(id) {
   return http.get(groupUrl(id));
 }
 
+export function getAndJoinGroup(code) {
+  return http.get(`${apiEndpoint}/join/${code}`);
+}
+
 export function saveGroup(group) {
   if (group._id) {
     http.put(groupUrl(group._id));

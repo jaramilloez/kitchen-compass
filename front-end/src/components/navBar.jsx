@@ -1,7 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserGroup } from "@fortawesome/free-solid-svg-icons";
 import { logOut } from "../services/authService";
 
 const NavBar = ({ user }) => {
@@ -53,10 +51,14 @@ const NavBar = ({ user }) => {
                 <li className="nav-item ms-sm-2 nav-link text-black">
                   Welcome, {user.name}
                 </li>
-                <li className="underlineAnimation pointerHover nav-item ms-sm-2">
+                <li className="underlineAnimation nav-item ms-sm-2">
                   <Link to="/group" className="nav-link">
-                    <FontAwesomeIcon icon={faUserGroup} className="pe-1" />{" "}
                     Group
+                  </Link>
+                </li>
+                <li className="underlineAnimation nav-item ms-sm-2">
+                  <Link to="/shopping-list" className="nav-link">
+                    Shopping List
                   </Link>
                 </li>
                 <li className="nav-item ms-sm-2">
@@ -65,7 +67,7 @@ const NavBar = ({ user }) => {
                       logOut();
                       window.location = "/";
                     }}
-                    className="btn btn-dark py-1"
+                    className="btn btn-outline-dark py-1"
                   >
                     Log Out
                   </button>

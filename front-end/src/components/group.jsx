@@ -1,19 +1,33 @@
 import React from "react";
-import { getUser } from "../services/usersService";
-import { getGroup } from "../services/groupsService";
-import { getGroupUser, getGroupUsers } from "../services/groupUsersService";
+import Joi from "joi-browser";
 import Form from "./common/form";
+import { getUser } from "../services/usersService";
+import {
+  getGroup,
+  getAndJoinGroup,
+  saveGroup,
+} from "../services/groupsService";
+import {
+  getGroupUser,
+  getGroupUsers,
+  postUserToGroup,
+} from "../services/groupUsersService";
 
 class Group extends Form {
   state = {
-    group: {},
+    group: "",
     usersInGroup: [],
+    data: {},
+    errors: {},
+  };
+
+  schema = {
+    code: Joi.string().required().length(6),
   };
 
   async componentDidMount() {
-    const { user } = this.props;
     try {
-      const { data: groupUser } = await getGroupUser(user._id);
+      const { data: groupUser } = await getGroupUser(this.props.user._id);
       if (groupUser) {
         //Get the group
         const { data: group } = await getGroup(groupUser.groupId);
@@ -30,11 +44,37 @@ class Group extends Form {
       }
     } catch (ex) {}
   }
+
+  startGroup = async () => {
+    saveGroup();
+    postUserToGroup({
+      groupId: this.state.group._id,
+      userId: this.props.user._id,
+    });
+  };
+
   render() {
+    const { group } = this.state;
     return (
-      <div className="container shadow rounded-1 bg-white my-4 p-4">
-        <div className="container col">{this.renderTitle("Group")}</div>
-        <div className="container col"></div>
+      <div className="container shadow rounded-1 bg-white my-4 p-5">
+        {this.renderTitle("Group")}
+        {!group && (
+          <React.Fragment>
+            <div className="fs-4 fst-italic">You are not in a group.</div>
+            <button
+              className="btn btn-dark mt-2"
+              onClick={() => this.startGroup()}
+            >
+              Start a group
+            </button>
+            <div className="mt-3">
+              <div className="fs-5">Join a group</div>
+              {this.renderInput("code", "Code")}
+              {this.renderSubmit("Join")}
+            </div>
+          </React.Fragment>
+        )}
+        {group && <React.Fragment></React.Fragment>}
       </div>
     );
   }

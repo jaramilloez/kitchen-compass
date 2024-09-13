@@ -9,6 +9,12 @@ router.get("/:id", async (req, res) => {
   res.send(group);
 });
 
+router.get("/join/:code", async (req, res) => {
+  const group = await Group.findOne(req.params.code);
+  if (!group) return res.status(404).send("Group not found.");
+  res.send(group);
+});
+
 router.post("/", async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);

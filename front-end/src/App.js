@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { ToastContainer } from "react-toastify";
 import { Route, Switch, Redirect } from "react-router-dom";
+import ShoppingList from "./components/shoppingList";
+import ARecipe from "./components/aRecipe";
 import NotFound from "./components/notFound";
 import Group from "./components/group";
 import { getCurrentUser } from "./services/authService";
@@ -25,12 +27,20 @@ class App extends Component {
         <NavBar user={user} />
         <Switch>
           <Route
+            path="/shopping-list"
+            render={() => {
+              if (user) return <ShoppingList />;
+              else return <Redirect to="/log-in" />;
+            }}
+          />
+          <Route
             path="/group"
             render={() => {
               if (user) return <Group user={user} />;
               else return <Redirect to="/log-in" />;
             }}
           />
+          <Route path="/recipes/:_id" component={ARecipe} />
           <Route path="/log-in" component={LogIn} />
           <Route path="/sign-up" component={SignUp} />
           <Route path="/not-found" component={NotFound} />
