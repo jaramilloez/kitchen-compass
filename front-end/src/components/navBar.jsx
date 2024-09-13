@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { faUserGroup } from "@fortawesome/free-solid-svg-icons";
 
 const NavBar = ({ user }) => {
   return (
@@ -53,8 +53,9 @@ const NavBar = ({ user }) => {
                   Welcome, {user.name}
                 </li>
                 <li className="underlineAnimation pointerHover nav-item ms-sm-2">
-                  <Link to="/profile" className="nav-link">
-                    <FontAwesomeIcon icon={faUser} className="pe-1" /> Profile
+                  <Link to="/group" className="nav-link">
+                    <FontAwesomeIcon icon={faUserGroup} className="pe-1" />{" "}
+                    Group
                   </Link>
                 </li>
               </React.Fragment>

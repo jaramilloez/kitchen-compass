@@ -5,11 +5,17 @@ const { Group } = require("../models/groups");
 const { GroupUser, validate } = require("../models/groupUsers");
 
 const router = express.Router();
-router.get("/:userId", async (req, res) => {
-  const groupUser = await GroupUser.find({ groupId: req.params.userId });
-  if (!groupUser)
-    return res.status(404).send("Group user relationship not found.");
+router.get("/user/:userId", async (req, res) => {
+  const groupUser = await GroupUser.findOne({ userId: req.params.userId });
+  if (!groupUser) return res.status(404).send("User may not be in a group.");
   res.send(groupUser);
+});
+
+router.get("/users/:groupId", async (req, res) => {
+  const groupUsers = await GroupUser.find({ groupId: req.params.groupId });
+  if (!groupUsers)
+    return res.status(404).send("Group user relationship not found.");
+  res.send(groupUsers);
 });
 
 router.post("/", async (req, res) => {

@@ -3,12 +3,16 @@ import http from "./httpService";
 
 const apiEndpoint = config.apiUrl + "/groupUsers";
 
-function groupUserUrl(id) {
-  return `${apiEndpoint}/${id}`;
+function groupUserUrl(path, id) {
+  return `${apiEndpoint}/${path}/${id}`;
 }
 
 export function getGroupUser(userId) {
-  return http.get(`${apiEndpoint}/${userId}`);
+  return http.get(groupUserUrl("user", userId));
+}
+
+export function getGroupUsers(groupId) {
+  return http.get(groupUserUrl("users", groupId));
 }
 
 export function postUserToGroup(groupUser) {

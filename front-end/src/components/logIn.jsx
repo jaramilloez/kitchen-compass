@@ -37,7 +37,7 @@ class LogIn extends Form {
     return (
       <div
         id="formWrapper"
-        className="container bg-white py-4 px-5 mb-5 rounded-1 shadow text-center"
+        className="container bg-white py-4 px-5 mb-4 rounded-1 shadow text-center"
       >
         {this.renderTitle("Log In")}
         <form>

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { ToastContainer } from "react-toastify";
 import { Route, Switch, Redirect } from "react-router-dom";
 import NotFound from "./components/notFound";
-import Profile from "./components/profile";
+import Group from "./components/group";
 import { getCurrentUser } from "./services/authService";
 import SignUp from "./components/signUp";
 import LogIn from "./components/logIn";
@@ -25,9 +25,9 @@ class App extends Component {
         <NavBar user={user} />
         <Switch>
           <Route
-            path="/profile"
+            path="/group"
             render={() => {
-              if (user) return <Profile />;
+              if (user) return <Group user={user} />;
               else return <Redirect to="/log-in" />;
             }}
           />
