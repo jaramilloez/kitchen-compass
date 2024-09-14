@@ -44,7 +44,7 @@ class App extends Component {
           <Route path="/log-in" component={LogIn} />
           <Route path="/sign-up" component={SignUp} />
           <Route path="/not-found" component={NotFound} />
-          <Route path="/" exact component={Home} />
+          <Route path="/" component={Home} />
           <Redirect to="/not-found" />
         </Switch>
       </React.Fragment>

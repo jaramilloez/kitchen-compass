@@ -24,57 +24,50 @@ const NavBar = ({ user }) => {
           id="hamburger"
           className="collapse navbar-collapse text-end w-100 justify-content-end"
         >
-          <ul className="navbar-nav fs-6 text-nowrap">
-            <li className="nav-item mx-sm-1">
-              <input
-                type="text"
-                placeholder="Search"
-                className="form-control"
-              />
-            </li>
-            {!user && (
-              <React.Fragment>
-                <li className="nav-item ms-sm-2">
-                  <Link to="/sign-up" className="underlineAnimation nav-link">
-                    Sign Up
-                  </Link>
-                </li>
-                <li className="nav-item ms-sm-2">
-                  <Link to="/log-in" className="underlineAnimation nav-link">
-                    Log In
-                  </Link>
-                </li>
-              </React.Fragment>
-            )}
-            {user && (
-              <React.Fragment>
-                <li className="nav-item ms-sm-2 nav-link text-black">
-                  Welcome, {user.name}
-                </li>
-                <li className="underlineAnimation nav-item ms-sm-2">
-                  <Link to="/group" className="nav-link">
-                    Group
-                  </Link>
-                </li>
-                <li className="underlineAnimation nav-item ms-sm-2">
-                  <Link to="/shopping-list" className="nav-link">
-                    Shopping List
-                  </Link>
-                </li>
-                <li className="nav-item ms-sm-2">
-                  <button
-                    onClick={() => {
-                      logOut();
-                      window.location = "/";
-                    }}
-                    className="btn btn-outline-dark py-1"
-                  >
-                    Log Out
-                  </button>
-                </li>
-              </React.Fragment>
-            )}
-          </ul>
+          {!user && (
+            <ul className="navbar-nav fs-6 text-nowrap">
+              <li className="nav-item ms-sm-2">
+                <Link to="/sign-up" className="underlineAnimation nav-link">
+                  Sign Up
+                </Link>
+              </li>
+              <li className="nav-item ms-sm-2">
+                <Link to="/log-in" className="underlineAnimation nav-link">
+                  Log In
+                </Link>
+              </li>
+            </ul>
+          )}
+          {user && (
+            <ul className="navbar-nav fs-6 text-nowrap">
+              <li className="underlineAnimation nav-item ms-sm-2">
+                <Link to="/shopping-list" className="nav-link">
+                  Shopping List
+                </Link>
+              </li>
+              <li className="underlineAnimation nav-item ms-sm-2">
+                <Link to="/new-recipe" className="nav-link">
+                  New recipe
+                </Link>
+              </li>
+              <li className="underlineAnimation nav-item ms-sm-2">
+                <Link to="/group" className="nav-link">
+                  Group
+                </Link>
+              </li>
+              <li className="nav-item ms-sm-2">
+                <button
+                  onClick={() => {
+                    logOut();
+                    window.location = "/";
+                  }}
+                  className="btn btn-outline-dark py-1"
+                >
+                  Log Out
+                </button>
+              </li>
+            </ul>
+          )}
         </div>
       </div>
     </nav>
