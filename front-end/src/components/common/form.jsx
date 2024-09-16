@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import Joi from "joi-browser";
+import Textarea from "./textarea";
+import Select from "./select";
 import Input from "./input";
 
 class Form extends Component {
@@ -32,15 +34,15 @@ class Form extends Component {
   };
 
   handleChange = ({ currentTarget: input }) => {
-    const { errors, data } = this.state;
-
     //Error handling
+    const errors = { ...this.state.errors };
     const errorMessage = this.validateInput(input);
     if (errorMessage) {
       errors[input.name] = errorMessage;
     } else delete errors[input.name];
 
     //Sets state
+    const data = { ...this.state.data };
     data[input.name] = input.value;
     this.setState({ data, errors });
   };
@@ -52,20 +54,56 @@ class Form extends Component {
     return error ? error.details[0].message : null;
   };
 
-  renderInput = (name, label, type = "text") => {
+  renderInput = (name, label, type = "text", index) => {
     const { data, errors } = this.state;
+
+    const findValue = () => {
+      if (Array.isArray(data[name])) {
+        const value = data[name];
+        return value[index].name;
+      } else return data[name];
+    };
 
     return (
       <Input
         name={name}
         label={label}
         error={errors[name]}
-        value={data[name]}
+        value={findValue()}
         type={type}
         onChange={this.handleChange}
       />
     );
   };
+
+  renderTextarea = (name, label) => {
+    const { data, errors } = this.state;
+
+    return (
+      <Textarea
+        name={name}
+        label={label}
+        error={errors[name]}
+        value={data[name]}
+        onChange={this.handleChange}
+      />
+    );
+  };
+
+  renderSelect(name, label, options) {
+    const { data, errors } = this.state;
+
+    return (
+      <Select
+        name={name}
+        label={label}
+        error={errors[name]}
+        options={options}
+        value={data[name]}
+        onChange={(event) => this.handleChange(event, options)}
+      />
+    );
+  }
 
   renderSubmit = (name) => {
     return (

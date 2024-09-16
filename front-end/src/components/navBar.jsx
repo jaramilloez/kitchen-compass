@@ -46,8 +46,8 @@ const NavBar = ({ user }) => {
                 </Link>
               </li>
               <li className="underlineAnimation nav-item ms-sm-2">
-                <Link to="/new-recipe" className="nav-link">
-                  New recipe
+                <Link to="/recipes/new-recipe" className="nav-link">
+                  New Recipe
                 </Link>
               </li>
               <li className="underlineAnimation nav-item ms-sm-2">

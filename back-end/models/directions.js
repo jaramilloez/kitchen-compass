@@ -14,7 +14,7 @@ const directionSchema = new mongoose.Schema(
       match: /^\d{1,2}\.$/,
       message: "The step must be a valid number with format 1. or 10.",
     },
-    instruction: {
+    name: {
       type: String,
       required: true,
     },
@@ -29,7 +29,7 @@ function validateDirection(direction) {
     step: Joi.string()
       .required()
       .message("The step must be a valid number with format 1. or 10."),
-    instruction: Joi.string().required(),
+    name: Joi.string().required(),
   });
   return schema.validate(direction);
 }

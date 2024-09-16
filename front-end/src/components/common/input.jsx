@@ -12,9 +12,7 @@ const Input = ({ name, label, error, ...rest }) => {
           placeholder={label}
           {...rest}
         />
-        <label htmlFor={name} placeholder={label}>
-          {label}
-        </label>
+        <label htmlFor={name}>{label}</label>
       </div>
     </div>
   );

@@ -14,7 +14,7 @@ router.post("/", async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
-  const { recipeId, step, instruction } = req.body;
+  const { recipeId, step, name } = req.body;
 
   const recipe = await Recipe.findById(recipeId);
   if (!recipe) return res.status(400).send("Invalid recipe.");
@@ -22,7 +22,7 @@ router.post("/", async (req, res) => {
   const direction = new Direction({
     recipeId: recipeId,
     step: step,
-    instruction: instruction,
+    name: name,
   });
 
   try {
@@ -38,7 +38,7 @@ router.put("/:id", async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
-  const { recipeId, step, instruction } = req.body;
+  const { recipeId, step, name } = req.body;
 
   const recipe = await Recipe.findById(recipeId);
   if (!recipe) return res.status(400).send("Invalid recipe.");
@@ -47,7 +47,7 @@ router.put("/:id", async (req, res) => {
     $set: {
       recipeId: recipeId,
       step: step,
-      intruction: instruction,
+      name: name,
     },
   });
   if (!direction) return res.status(404).send("Direction not found.");
