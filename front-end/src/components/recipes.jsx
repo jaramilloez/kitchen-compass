@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import _ from "lodash";
 import Pagination from "./pagination";
 import { paginate } from "../utility/paginate";
 import { getRecipes } from "../services/recipesService";
@@ -52,8 +53,10 @@ class Recipes extends Component {
     return { itemsCount: filtered.length, data: recipes };
   };
 
+  hanglePageChange = () => {};
+
   render() {
-    const { cuisines, selectedFilter } = this.state;
+    const { cuisines, selectedFilter, pageSize, currentPage } = this.state;
     const { itemsCount, data: recipes } = this.getPagedData();
 
     return (
