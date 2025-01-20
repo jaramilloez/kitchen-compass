@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const express = require("express");
 const fs = require("fs");
 
+const seedData = require("./seedData/seedDataImport");
 const TestApplication = require("./middleware/logger");
 const units = require("./routes/units");
 const recipeIngredients = require("./routes/recipeIngredients");
@@ -49,6 +50,8 @@ testapplication.on("loadApplication", (arg) => {
   });
 });
 testapplication.loadApplication("Application is Loading...");
+
+seedData();
 
 const port = process.env.PORT || 3001;
 app.listen(port, () => console.log(`Listening on port ${port}...`));

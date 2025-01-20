@@ -68,12 +68,12 @@ class Recipes extends Component {
             onFilterSelect={this.handleFilterSelect}
           />
           <RecipeCards data={recipes} />
-          <Pagination
+          {/* <Pagination
             itemsCount={itemsCount}
             pageSize={pageSize}
             currentPage={currentPage}
             onPageChange={this.handlePageChange}
-          />
+          /> */}
         </div>
       </div>
     );
