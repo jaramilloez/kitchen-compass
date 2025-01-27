@@ -16,10 +16,9 @@ const recipeSchema = new mongoose.Schema({
   servings: {
     type: Number,
     required: true,
-    max: 2,
   },
   cuisine: {
-    type: cuisineSchema,
+    type: [cuisineSchema],
     required: true,
   },
   pic: {
@@ -33,8 +32,8 @@ function validateRecipe(recipe) {
   const schema = Joi.object({
     name: Joi.string().required(),
     description: Joi.string().required(),
-    servings: Joi.number().required().max(2),
-    cuisine: Joi.objectId().required(),
+    servings: Joi.number().required(),
+    cuisine: Joi.array().items(Joi.objectId()).required(),
     pic: Joi.buffer().required(),
   });
   return schema.validate(recipe);

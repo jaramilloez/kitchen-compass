@@ -1,1 +1,56 @@
-[{}]
+[
+  {
+    "name": "Asian"
+  },
+  {
+    "name": "Barbeque"
+  },
+  {
+    "name": "Breads"
+  },
+  {
+    "name": "Breakfast"
+  },
+  {
+    "name": "Casseroles"
+  },
+  {
+    "name": "Chicken"
+  },
+  {
+    "name": "Desserts"
+  },
+  {
+    "name": "Drinks"
+  },
+  {
+    "name": "Dips"
+  },
+  {
+    "name": "Indian"
+  },
+  {
+    "name": "Mediterranean"
+  },
+  {
+    "name": "Mexican"
+  },
+  {
+    "name": "Pastas"
+  },
+  {
+    "name": "Salads"
+  },
+  {
+    "name": "Seafood"
+  },
+  {
+    "name": "Sides"
+  },
+  {
+    "name": "Snacks"
+  },
+  {
+    "name": "Soups"
+  }
+]
