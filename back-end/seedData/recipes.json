@@ -2,6 +2,9 @@
   {
     "name": "Spaghetti",
     "description": "Yummy spghetti yes nodle and sauce :)",
-    "servings": 4
+    "servings": 4,
+    "cuisine": {
+      "$oid": "679835dba7955245e941a4cc"
+    }
   }
 ]
