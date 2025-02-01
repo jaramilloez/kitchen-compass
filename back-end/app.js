@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const express = require("express");
 const fs = require("fs");
+const bodyParser = require("body-parser");
 
 const seedData = require("./seedData/seedDataImport");
 const TestApplication = require("./middleware/logger");
@@ -21,8 +22,8 @@ global.Headers = fetch.Headers || Headers;
 
 const app = express();
 require("./routes/cors")(app);
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.json({ limit: "16mb" }));
+app.use(bodyParser.urlencoded({ limit: "16mb", extended: true }));
 app.use("/api/categories", categories);
 app.use("/api/groups", groups);
 app.use("/api/ingredients", ingredients);

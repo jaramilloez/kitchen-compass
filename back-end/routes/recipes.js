@@ -6,7 +6,14 @@ const { Recipe, validate } = require("../models/recipes");
 const router = express.Router();
 router.get("/", async (req, res) => {
   const recipes = await Recipe.find();
-  res.send(recipes);
+  const recipeData = recipes.map((recipe) => ({
+    _id: recipe._id,
+    name: recipe.name,
+    description: recipe.description,
+    servings: recipe.servings,
+    pic: `data:image/jpg;base64,${recipe.pic}`,
+  }));
+  res.send(recipeData);
 });
 
 router.get("/:id", async (req, res) => {
@@ -40,7 +47,10 @@ router.post("/", async (req, res) => {
     res.send(result);
     console.log(result);
   } catch (ex) {
-    for (field in ex.errors) console.log(ex.errors[field].message);
+    for (field in ex.errors) {
+      console.log(ex.errors[field].message);
+      res.status(400).send(ex.errors[field].message);
+    }
   }
 });
 

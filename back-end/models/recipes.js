@@ -34,7 +34,7 @@ function validateRecipe(recipe) {
     description: Joi.string().required(),
     servings: Joi.number().required(),
     cuisine: Joi.array().items(Joi.objectId()).required(),
-    pic: Joi.buffer().required(),
+    pic: Joi.binary().required(),
   });
   return schema.validate(recipe);
 }
