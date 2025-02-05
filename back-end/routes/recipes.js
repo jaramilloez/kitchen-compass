@@ -12,6 +12,7 @@ router.get("/", async (req, res) => {
       name: recipe.name,
       description: recipe.description,
       servings: recipe.servings,
+      cuisine: recipe.cuisine,
       pic: `data:image/jpg;base64,${recipe.pic}`,
     }))
   );
@@ -24,6 +25,7 @@ router.get("/:id", async (req, res) => {
     _id: recipe._id,
     name: recipe.name,
     description: recipe.description,
+    cuisine: recipe.cuisine,
     servings: recipe.servings,
     pic: `data:image/jpg;base64,${recipe.pic}`,
   });
