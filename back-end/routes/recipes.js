@@ -6,20 +6,27 @@ const { Recipe, validate } = require("../models/recipes");
 const router = express.Router();
 router.get("/", async (req, res) => {
   const recipes = await Recipe.find();
-  const recipeData = recipes.map((recipe) => ({
-    _id: recipe._id,
-    name: recipe.name,
-    description: recipe.description,
-    servings: recipe.servings,
-    pic: `data:image/jpg;base64,${recipe.pic}`,
-  }));
-  res.send(recipeData);
+  res.send(
+    recipes.map((recipe) => ({
+      _id: recipe._id,
+      name: recipe.name,
+      description: recipe.description,
+      servings: recipe.servings,
+      pic: `data:image/jpg;base64,${recipe.pic}`,
+    }))
+  );
 });
 
 router.get("/:id", async (req, res) => {
   const recipe = await Recipe.findById(req.params.id);
   if (!recipe) return res.status(404).send("Recipe not found.");
-  res.send(recipe);
+  res.send({
+    _id: recipe._id,
+    name: recipe.name,
+    description: recipe.description,
+    servings: recipe.servings,
+    pic: `data:image/jpg;base64,${recipe.pic}`,
+  });
 });
 
 router.post("/", async (req, res) => {
