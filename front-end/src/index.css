@@ -7,7 +7,7 @@ body {
 }
 
 .bgLightGray {
-  background-color: rgb(240, 240, 240);
+  background-color: rgb(220, 220, 220);
 }
 
 .pointerHover:hover {
@@ -48,10 +48,6 @@ body {
   display: block;
   top: 0 !important;
   height: 100%;
-}
-
-.filterItem {
-  background-color: rgb(240, 240, 240);
 }
 
 .filterItem:hover {

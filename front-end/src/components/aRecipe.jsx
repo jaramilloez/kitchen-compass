@@ -15,7 +15,7 @@ class ARecipe extends Form {
       name: "",
       description: "",
       servings: "",
-      cuisine: "",
+      cuisine: [],
       pic: "",
 
       recipeIngredients: [],
@@ -110,15 +110,31 @@ class ARecipe extends Form {
     const nextDirection = directions ? directions.length + 1 + "." : "1.";
 
     return (
-      <div className="container shadow rounded-1 bg-white py-4 px-5 my-4">
+      <div className="container rounded-1 py-4 my-4">
         {!editing && (
           <React.Fragment>
-            {this.renderTitle(name)}
-            <img src={pic} alt={description}></img>
-            <div className="fs-6">{cuisine.name}</div>
-            <div className="fs-6">{description}</div>
-            <div className="fs-6">{servings}</div>
-            <div className="fs-6">{recipeIngredients}</div>
+            <div className="container">
+              <div className="row">
+                <div className="col-12 col-lg-6">
+                  <img src={pic} alt={description} className="img-fluid"></img>
+                </div>
+                <div className="col-12 col-lg-6">
+                  {this.renderTitle(name)}
+                  {cuisine.map((item) => (
+                    <span
+                      className="bgLightGray fs-5 p-1 rounded-4"
+                      key={item._id}
+                    >
+                      {item.name}
+                    </span>
+                  ))}
+                  <div className="fs-4 mt-3 fw-bold">Description</div>
+                  <div className="fs-5">{description}</div>
+                  <div className="fs-5 mt-3">Serves {servings}</div>
+                </div>
+              </div>
+            </div>
+            <div className="fs-3">{recipeIngredients}</div>
           </React.Fragment>
         )}
         {editing && (

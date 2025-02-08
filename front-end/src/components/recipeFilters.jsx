@@ -21,7 +21,7 @@ const RecipeFilters = ({ filters, selectedFilter, onFilterSelect }) => {
           className={
             isActive(filter, index)
               ? "bg-white border-0 list-group-item pe-5 fs-6"
-              : "pointerHover filterItem border-0 list-group-item pe-5 fs-6"
+              : "pointerHover filterItem border-0 list-group-item pe-5 fs-6 bgLightGray"
           }
           key={filter._id}
           onClick={() => onFilterSelect(filter)}
