@@ -121,10 +121,7 @@ class ARecipe extends Form {
                 <div className="col-12 col-lg-6">
                   {this.renderTitle(name)}
                   {cuisine.map((item) => (
-                    <span
-                      className="bgLightGray fs-5 p-1 rounded-4"
-                      key={item._id}
-                    >
+                    <span className="bgBrown fs-5 p-1 rounded-4" key={item._id}>
                       {item.name}
                     </span>
                   ))}

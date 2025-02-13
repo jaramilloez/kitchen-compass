@@ -60,7 +60,7 @@ class Recipes extends Component {
     const { itemsCount, data: recipes } = this.getPagedData();
 
     return (
-      <div className="container shadow rounded-1 bg-white my-4">
+      <div className="container rounded-1 my-4">
         <div className="row flex-wrap">
           <RecipeFilters
             filters={cuisines}

@@ -1,13 +1,17 @@
 /* | General | */
 
 body {
-  background-color: rgb(240, 240, 230);
+  background-color: white;
   font-family: Zain;
   padding: 0 0.25rem;
 }
 
-.bgLightGray {
-  background-color: rgb(220, 220, 220);
+.bgBrown {
+  background-color: rgb(150 110 60);
+}
+
+.bgBlue {
+  background-color: rgb(100 140 190);
 }
 
 .pointerHover:hover {
@@ -34,25 +38,39 @@ body {
 /* | Home | */
 
 .recipeCard:hover {
-  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.15);
+  box-shadow: 3px 3px black;
   transition: box-shadow 0.2s;
 }
 
 .cardDrawer {
   top: 100% !important;
   height: 0;
+  background-color: rgb(255 255 255 / 75%);
   transition: all 0.2s;
 }
-
 .recipeCard:hover .cardDrawer {
   display: block;
   top: 0 !important;
   height: 100%;
 }
 
-.filterItem:hover {
-  background-color: white;
-  transition: all 0.3s;
+.filterItem {
+  position: relative;
+  border-right: 3px solid rgb(100 140 190) !important;
+}
+.filterItem::after {
+  content: "";
+  position: absolute;
+  background-color: rgb(100 140 190);
+  z-index: -1;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 0;
+  transition: width 0.2s;
+}
+.filterItem:hover::after {
+  width: 100%;
 }
 
 .list-group {

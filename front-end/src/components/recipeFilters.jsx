@@ -12,16 +12,14 @@ const RecipeFilters = ({ filters, selectedFilter, onFilterSelect }) => {
   };
 
   return (
-    <ul className="bgLightGray col-auto list-group p-0 rounded-start-1">
-      <li className="list-group-item border-0 bg-transparent fs-5 pe-5">
-        Cuisines
-      </li>
+    <ul className="col-auto list-group p-0">
+      <li className="list-group-item border-0 fs-5">Filters</li>
       {filters.map((filter, index) => (
         <li
           className={
             isActive(filter, index)
-              ? "bg-white border-0 list-group-item pe-5 fs-6"
-              : "pointerHover filterItem border-0 list-group-item pe-5 fs-6 bgLightGray"
+              ? "list-group-item border-0 pe-3 fs-6 bgBlue"
+              : "pointerHover filterItem list-group-item border-0 pe-3 p fs-6 bg-transparent"
           }
           key={filter._id}
           onClick={() => onFilterSelect(filter)}
