@@ -3,11 +3,9 @@ import React from "react";
 const RecipeFilters = ({ filters, selectedFilter, onFilterSelect }) => {
   const isActive = (filter, index) => {
     if (selectedFilter == null) {
-      if (index === 0) return true;
-      else return false;
+      return index === 0 ? true : false;
     } else {
-      if (filter === selectedFilter) return true;
-      else return false;
+      return filter === selectedFilter ? true : false;
     }
   };
 

@@ -1,6 +1,6 @@
 const express = require("express");
 
-const { Cuisine } = require("../models/cuisines");
+const { Tag } = require("../models/tags");
 const { Recipe, validate } = require("../models/recipes");
 
 const router = express.Router();
@@ -12,7 +12,7 @@ router.get("/", async (req, res) => {
       name: recipe.name,
       description: recipe.description,
       servings: recipe.servings,
-      cuisine: recipe.cuisine,
+      tags: recipe.tags,
       pic: `data:image/jpg;base64,${recipe.pic}`,
     }))
   );
@@ -25,7 +25,7 @@ router.get("/:id", async (req, res) => {
     _id: recipe._id,
     name: recipe.name,
     description: recipe.description,
-    cuisine: recipe.cuisine,
+    tags: recipe.tags,
     servings: recipe.servings,
     pic: `data:image/jpg;base64,${recipe.pic}`,
   });
@@ -35,19 +35,19 @@ router.post("/", async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
-  const { name, description, servings, cuisine, pic } = req.body;
+  const { name, description, servings, tags, pic } = req.body;
 
-  const cuisineObj = await Cuisine.findById(cuisine);
-  if (!cuisineObj) return res.status(400).send("Invalid cuisine.");
+  const tagObjs = tags.map((tag) => {
+    const tagObj = Tag.findById(tag);
+    if (!tagObj) return res.status(400).send("Invalid tag.");
+    return tagObj;
+  });
 
   const recipe = new Recipe({
     name: name,
     description: description,
     servings: servings,
-    cuisine: {
-      _id: cuisineObj._id,
-      name: cuisineObj.name,
-    },
+    tags: tagObjs,
     pic: pic,
   });
 
@@ -67,19 +67,22 @@ router.put("/:id", async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
-  const { name, description, servings, cuisine, pic } = req.body;
+  const { name, description, servings, tag, pic } = req.body;
 
-  const cuisineObj = await Cuisine.findById(cuisine);
-  if (!cuisineObj) return res.status(400).send("Invalid cuisine.");
+  const tagObjs = tags.map((tag) => {
+    const tagObj = Tag.findById(tag);
+    if (!tagObj) return res.status(400).send("Invalid tag.");
+    return tagObj;
+  });
 
   const recipe = await Recipe.findByIdAndUpdate(req.params.id, {
     $set: {
       name: name,
       description: description,
       servings: servings,
-      cuisine: {
-        _id: cuisineObj._id,
-        name: cuisineObj.name,
+      tags: {
+        _id: tagObj._id,
+        name: tagObj.name,
       },
       pic: pic,
     },

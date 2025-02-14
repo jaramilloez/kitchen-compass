@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Joi = require("joi");
 Joi.objectId = require("joi-objectid")(Joi);
 
-const { cuisineSchema } = require("./cuisines");
+const { tagSchema } = require("./tags");
 
 const recipeSchema = new mongoose.Schema({
   name: {
@@ -17,8 +17,8 @@ const recipeSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  cuisine: {
-    type: [cuisineSchema],
+  tags: {
+    type: [tagSchema],
     required: true,
   },
   pic: {
@@ -33,7 +33,7 @@ function validateRecipe(recipe) {
     name: Joi.string().required(),
     description: Joi.string().required(),
     servings: Joi.number().required(),
-    cuisine: Joi.array().items(Joi.objectId()).required(),
+    tags: Joi.array().items(Joi.objectId()).required(),
     pic: Joi.binary().required(),
   });
   return schema.validate(recipe);

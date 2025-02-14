@@ -4,49 +4,44 @@ import Pagination from "./pagination";
 import { paginate } from "../utility/paginate";
 import { getRecipes } from "../services/recipesService";
 import { getIngredients } from "../services/ingredientsService";
-import { getCuisines } from "../services/cuisinesService";
+import { getTags } from "../services/tagsService";
 import RecipeFilters from "./recipeFilters";
 import RecipeCards from "./recipeCards";
 
 class Recipes extends Component {
   state = {
     recipes: [],
-    cuisines: [],
-    ingredients: [],
+    tags: [],
     pageSize: 30,
     currentPage: 1,
+    selectedFilter: null,
   };
 
   async componentDidMount() {
     const { data: recipes } = await getRecipes();
-    const { data: cuisines } = await getCuisines();
-    const cuisinesWAll = [{ _id: null, name: "All" }, ...cuisines];
-    const { data: ingredients } = await getIngredients();
-    const ingredientsWAll = [{ _id: null, name: "All" }, ...ingredients];
+    const { data: tags } = await getTags();
+    const tagsWAll = [{ _id: null, name: "All" }, ...tags];
     this.setState({
       recipes,
-      cuisines: cuisinesWAll,
-      ingredients: ingredientsWAll,
+      tags: tagsWAll,
     });
   }
 
-  handleFilterSelect = (cuisine) => {
-    this.setState({ selectedCuisine: cuisine, currentPage: 1 });
+  handleFilterSelect = (tag) => {
+    this.setState({ selectedFilter: tag, currentPage: 1 });
   };
 
   getPagedData = () => {
     const {
       pageSize,
       currentPage,
-      selectedCuisine,
+      selectedFilter,
       recipes: allRecipes,
     } = this.state;
 
     const filtered =
-      selectedCuisine && selectedCuisine._id
-        ? allRecipes.filter(
-            (recipe) => recipe.cuisine._id === selectedCuisine._id
-          )
+      selectedFilter && selectedFilter._id
+        ? allRecipes.filter((recipe) => recipe.tag._id === selectedFilter._id)
         : allRecipes;
     const sorted = _.orderBy(filtered, "name", "asc");
     const recipes = paginate(sorted, currentPage, pageSize);
@@ -56,14 +51,14 @@ class Recipes extends Component {
   hanglePageChange = () => {};
 
   render() {
-    const { cuisines, selectedFilter, pageSize, currentPage } = this.state;
+    const { tags, selectedFilter, pageSize, currentPage } = this.state;
     const { itemsCount, data: recipes } = this.getPagedData();
 
     return (
       <div className="container rounded-1 my-4">
         <div className="row flex-wrap">
           <RecipeFilters
-            filters={cuisines}
+            filters={tags}
             selectedFilter={selectedFilter}
             onFilterSelect={this.handleFilterSelect}
           />

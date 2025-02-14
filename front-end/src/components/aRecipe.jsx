@@ -5,7 +5,7 @@ import { getIngredients } from "../services/ingredientsService";
 import { getCategories } from "../services/categoriesService";
 import { getRecipe } from "../services/recipesService";
 import { getUnits } from "../services/unitsService";
-import { getCuisines } from "../services/cuisinesService";
+import { getTags } from "../services/tagsService";
 import Form from "./common/form";
 import { getDirections } from "../services/directionsService";
 
@@ -15,7 +15,7 @@ class ARecipe extends Form {
       name: "",
       description: "",
       servings: "",
-      cuisine: [],
+      tags: [],
       pic: "",
 
       recipeIngredients: [],
@@ -25,7 +25,7 @@ class ARecipe extends Form {
       newIngredient: "",
       category: "",
     },
-    cuisines: [],
+    allTags: [],
     allIngredients: [],
     units: [],
     categories: [],
@@ -37,7 +37,7 @@ class ARecipe extends Form {
     name: Joi.string().required(),
     description: Joi.string().required(),
     servings: Joi.number().required(),
-    cuisine: Joi.required(),
+    tag: Joi.required(),
     pic: Joi.required(),
     directions: Joi.required(),
     newDirection: Joi.string().required(),
@@ -66,11 +66,11 @@ class ARecipe extends Form {
   }
 
   async populateSelects() {
-    const { data: cuisines } = await getCuisines();
+    const { data: allTags } = await getTags();
     const { data: categories } = await getCategories();
     const { data: allIngredients } = await getIngredients();
     const { data: units } = await getUnits();
-    this.setState({ cuisines, categories, allIngredients, units });
+    this.setState({ allTags, categories, allIngredients, units });
   }
 
   async onEdit() {
@@ -92,7 +92,7 @@ class ARecipe extends Form {
   };
 
   doSubmit = async () => {
-    const { data, cuisines, allIngredients, units, categories } = this.state;
+    const { data, allTags, allIngredients, units, categories } = this.state;
   };
 
   render() {
@@ -100,13 +100,13 @@ class ARecipe extends Form {
       name,
       description,
       servings,
-      cuisine,
+      tags,
       pic,
       recipeIngredients,
       directions,
       newIngredient,
     } = this.state.data;
-    const { allIngredients, units, cuisines, categories, editing } = this.state;
+    const { allIngredients, units, allTags, categories, editing } = this.state;
     const nextDirection = directions ? directions.length + 1 + "." : "1.";
 
     return (
@@ -120,7 +120,7 @@ class ARecipe extends Form {
                 </div>
                 <div className="col-12 col-lg-6">
                   {this.renderTitle(name)}
-                  {cuisine.map((item) => (
+                  {tags.map((item) => (
                     <span className="bgBrown fs-5 p-1 rounded-4" key={item._id}>
                       {item.name}
                     </span>
@@ -138,7 +138,7 @@ class ARecipe extends Form {
           <React.Fragment>
             <div className="col">
               {this.renderInput("name", "Name")}
-              {this.renderSelect("cuisine", "Cuisine", cuisines)}
+              {this.renderSelect("tag", "Tag", allTags)}
               {this.renderTextarea("description", "Description")}
               {this.renderInput("servings", "Servings")}
               {/* {this.renderSelect("ingredient", "Ingredient", allIngredients)} */}
