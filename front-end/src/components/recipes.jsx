@@ -41,7 +41,9 @@ class Recipes extends Component {
 
     const filtered =
       selectedFilter && selectedFilter._id
-        ? allRecipes.filter((recipe) => recipe.tag._id === selectedFilter._id)
+        ? allRecipes.filter((recipe) => {
+            return recipe.tags.find((tag) => tag._id === selectedFilter._id);
+          })
         : allRecipes;
     const sorted = _.orderBy(filtered, "name", "asc");
     const recipes = paginate(sorted, currentPage, pageSize);
