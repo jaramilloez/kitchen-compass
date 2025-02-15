@@ -12,7 +12,7 @@ const groupUserSchema = new mongoose.Schema({
     required: true,
   },
 });
-const GroupUser = mongoose.model("Group User", groupUserSchema);
+const GroupUser = mongoose.model("GroupUser", groupUserSchema);
 
 function validateGroupUser(groupUser) {
   const schema = Joi.object({
