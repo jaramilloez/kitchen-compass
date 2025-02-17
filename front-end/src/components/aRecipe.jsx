@@ -100,7 +100,6 @@ class ARecipe extends Form {
       name,
       description,
       servings,
-      tags,
       pic,
       recipeIngredients,
       directions,
@@ -120,11 +119,6 @@ class ARecipe extends Form {
                 </div>
                 <div className="col-12 col-lg-6">
                   {this.renderTitle(name)}
-                  {tags.map((item) => (
-                    <span className="bgBrown fs-5 p-1 rounded-4" key={item._id}>
-                      {item.name}
-                    </span>
-                  ))}
                   <div className="fs-4 mt-3 fw-bold">Description</div>
                   <div className="fs-5">{description}</div>
                   <div className="fs-5 mt-3">Serves {servings}</div>

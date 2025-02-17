@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const RecipeCards = ({ data }) => {
   return (
-    <div className="container col py-3 px-5">
+    <div className="container col py-3">
       <div className="row flex-wrap">
         {data.map((item) => (
           <Link
