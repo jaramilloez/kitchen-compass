@@ -4,11 +4,11 @@ Joi.objectId = require("joi-objectid")(Joi);
 
 const recipeTagSchema = new mongoose.Schema({
   recipe_id: {
-    type: ObjectId,
+    type: String,
     required: true,
   },
   tag_id: {
-    type: ObjectId,
+    type: String,
     required: true,
   },
 });

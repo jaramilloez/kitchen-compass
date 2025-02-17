@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 
 const seedData = require("./seedData/seedDataImport");
 const TestApplication = require("./middleware/logger");
-const recipeTags = require("routes/recipeTags");
+const recipeTags = require("./routes/recipeTags");
 const units = require("./routes/units");
 const recipeIngredients = require("./routes/recipeIngredients");
 const groupUsers = require("./routes/groupUsers");
