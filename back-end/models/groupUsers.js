@@ -3,11 +3,11 @@ const Joi = require("joi");
 Joi.objectId = require("joi-objectid")(Joi);
 
 const groupUserSchema = new mongoose.Schema({
-  groupId: {
+  group_id: {
     type: String,
     required: true,
   },
-  userId: {
+  user_id: {
     type: String,
     required: true,
   },
@@ -16,8 +16,8 @@ const GroupUser = mongoose.model("GroupUser", groupUserSchema);
 
 function validateGroupUser(groupUser) {
   const schema = Joi.object({
-    groupId: Joi.objectId().required(),
-    userId: Joi.objectId().required(),
+    group_id: Joi.objectId().required(),
+    user_id: Joi.objectId().required(),
   });
   return schema.validate(groupUser);
 }

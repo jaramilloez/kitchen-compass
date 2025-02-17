@@ -5,11 +5,11 @@ Joi.objectId = require("joi-objectid")(Joi);
 const { unitSchema } = require("./units");
 
 const recipeIngredientSchema = new mongoose.Schema({
-  ingredientId: {
+  ingredient_id: {
     type: String,
     required: true,
   },
-  recipeId: {
+  recipe_id: {
     type: String,
     required: true,
   },
@@ -32,8 +32,8 @@ const RecipeIngredient = mongoose.model(
 
 function validateRecipeIngredient(recipeIngredient) {
   const schema = Joi.object({
-    ingredientId: Joi.objectId().required(),
-    recipeId: Joi.objectId().required(),
+    ingredient_id: Joi.objectId().required(),
+    recipe_id: Joi.objectId().required(),
     amount: Joi.string()
       .required()
       .regex(/\d+(?:\.\d+)?|\d\/\d/)

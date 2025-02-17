@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 
 const seedData = require("./seedData/seedDataImport");
 const TestApplication = require("./middleware/logger");
+const recipeTags = require("routes/recipeTags");
 const units = require("./routes/units");
 const recipeIngredients = require("./routes/recipeIngredients");
 const groupUsers = require("./routes/groupUsers");
@@ -34,6 +35,7 @@ app.use("/api/directions", directions);
 app.use("/api/groupUsers", groupUsers);
 app.use("/api/recipeIngredients", recipeIngredients);
 app.use("/api/units", units);
+app.use("/api/recipeTags", recipeTags);
 
 mongoose.connect("mongodb://127.0.0.1/kitchen-compass");
 
