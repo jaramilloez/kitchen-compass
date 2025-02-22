@@ -1,4 +1,6 @@
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFilter } from "@fortawesome/free-solid-svg-icons";
 
 const RecipeFilters = ({ filters, selectedFilter, onFilterSelect }) => {
   const isActive = (filter, index) => {
@@ -11,7 +13,9 @@ const RecipeFilters = ({ filters, selectedFilter, onFilterSelect }) => {
 
   return (
     <ul className="col-auto list-group p-0">
-      <li className="list-group-item border-0 fs-5">Filters</li>
+      <li className="list-group-item border-0 fs-5">
+        Filters <FontAwesomeIcon icon={faFilter} size="2xs" />
+      </li>
       {filters.map((filter, index) => (
         <li
           className={

@@ -1,4 +1,6 @@
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEllipsis } from "@fortawesome/free-solid-svg-icons";
 import Joi from "joi-browser";
 import _ from "lodash";
 import { getIngredients } from "../services/ingredientsService";
@@ -113,6 +115,11 @@ class ARecipe extends Form {
         {!editing && (
           <React.Fragment>
             <div className="container">
+              <div className="row justify-content-end">
+                <button className="btn w-auto">
+                  <FontAwesomeIcon icon={faEllipsis} size="xl" />
+                </button>
+              </div>
               <div className="row">
                 <div className="col-12 col-lg-6">
                   <img src={pic} alt={description} className="img-fluid"></img>
