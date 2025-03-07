@@ -1,6 +1,6 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsis } from "@fortawesome/free-solid-svg-icons";
+import { faPencil } from "@fortawesome/free-solid-svg-icons";
 import Joi from "joi-browser";
 import _ from "lodash";
 import { getIngredients } from "../services/ingredientsService";
@@ -75,10 +75,6 @@ class ARecipe extends Form {
     this.setState({ allTags, categories, allIngredients, units });
   }
 
-  async onEdit() {
-    this.setState({ editing: true });
-  }
-
   async handleSubmitNewIngredient() {}
 
   handleSubmitNewDirection = () => {
@@ -111,37 +107,42 @@ class ARecipe extends Form {
     const nextDirection = directions ? directions.length + 1 + "." : "1.";
 
     return (
-      <div className="container rounded-1 py-4 my-4">
-        {!editing && (
+      <div className="container my-4">
+        <div className="row justify-content-end">
+          <button
+            className="btn w-auto fs-5"
+            onClick={() => this.setState({ editing: editing ? false : true })}
+          >
+            Edit <FontAwesomeIcon icon={faPencil} className="fa-xs" />
+          </button>
+        </div>
+        {!editing ? (
           <React.Fragment>
-            <div className="container">
-              <div className="row justify-content-end">
-                <button className="btn w-auto">
-                  <FontAwesomeIcon icon={faEllipsis} size="xl" />
-                </button>
+            <div className="row">
+              <div className="col-12 col-lg-6">
+                <img src={pic} alt={description} className="img-fluid"></img>
               </div>
-              <div className="row">
-                <div className="col-12 col-lg-6">
-                  <img src={pic} alt={description} className="img-fluid"></img>
-                </div>
-                <div className="col-12 col-lg-6">
-                  {this.renderTitle(name)}
-                  <div className="fs-4 mt-3 fw-bold">Description</div>
-                  <div className="fs-5">{description}</div>
-                  <div className="fs-5 mt-3">Serves {servings}</div>
-                </div>
+              <div className="col-12 col-lg-6">
+                {this.renderTitle(name)}
+                <div className="fs-4 mt-3 fw-bold">Description</div>
+                <div className="fs-5">{description}</div>
+                <div className="fs-5 mt-3">Serves {servings}</div>
               </div>
             </div>
-            <div className="fs-3">{recipeIngredients}</div>
+            <div className="row fs-3">{recipeIngredients}</div>
           </React.Fragment>
-        )}
-        {editing && (
+        ) : (
           <React.Fragment>
-            <div className="col">
-              {this.renderInput("name", "Name")}
-              {this.renderSelect("tag", "Tag", allTags)}
-              {this.renderTextarea("description", "Description")}
-              {this.renderInput("servings", "Servings")}
+            <div className="row">
+              <div className="col-12 col-lg-6">
+                <img src={pic} alt={description} className="img-fluid"></img>
+              </div>
+              <div className="col-12 col-lg-6">
+                {this.renderInput("name", "Name")}
+                {this.renderSelect("tag", "Tag", allTags)}
+                {this.renderTextarea("description", "Description")}
+                {this.renderInput("servings", "Servings")}
+              </div>
               {/* {this.renderSelect("ingredient", "Ingredient", allIngredients)} */}
               <div className="row">{this.renderInput("newIngredient")}</div>
               <div className="fs-3 mt-5">Directions</div>
@@ -166,7 +167,7 @@ class ARecipe extends Form {
                 </button>
               </div>
             </div>
-            <div className="col"></div>
+            <div className="row"></div>
           </React.Fragment>
         )}
       </div>

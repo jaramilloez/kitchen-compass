@@ -12,7 +12,6 @@ const Select = ({ name, label, error, options, value, ...rest }) => {
           name={name}
           {...rest}
         >
-          <option disabled={value._id}></option>
           {options.map((option) => (
             <option key={option._id} value={option._id}>
               {option.name}
