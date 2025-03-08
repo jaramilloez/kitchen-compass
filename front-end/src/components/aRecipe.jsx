@@ -31,7 +31,7 @@ class ARecipe extends Form {
     allIngredients: [],
     units: [],
     categories: [],
-    editing: false,
+    editing: true,
     errors: {},
   };
 
@@ -89,6 +89,10 @@ class ARecipe extends Form {
 
   handleSubmitNewTag = () => {};
 
+  handleEditingToggle = () => {
+    this.setState({ editing: this.state.editing ? false : true });
+  };
+
   doSubmit = async () => {
     const { data, allTags, allIngredients, units, categories } = this.state;
   };
@@ -108,21 +112,21 @@ class ARecipe extends Form {
 
     return (
       <div className="container my-4">
-        <div className="row justify-content-end">
-          <button
-            className="editBtn btn w-auto fs-5 d-flex align-items-center"
-            onClick={() => this.setState({ editing: editing ? false : true })}
-          >
-            <div className="overflow-hidden">
-              <div className="editBtnText overflow-hidden position-relative">
-                Edit
-              </div>
-            </div>
-            <FontAwesomeIcon icon={faPencil} className="fa-xs ps-1" />
-          </button>
-        </div>
         {!editing ? (
           <React.Fragment>
+            <div className="row justify-content-end">
+              <button
+                className="editBtn btn w-auto fs-5 d-flex align-items-center"
+                onClick={this.handleEditingToggle}
+              >
+                <div className="overflow-hidden">
+                  <div className="editBtnText overflow-hidden position-relative">
+                    Edit
+                  </div>
+                </div>
+                <FontAwesomeIcon icon={faPencil} className="fa-xs ps-1" />
+              </button>
+            </div>
             <div className="row">
               <div className="col-12 col-lg-6">
                 <img src={pic} alt={description} className="img-fluid"></img>
@@ -150,7 +154,7 @@ class ARecipe extends Form {
                   </div>
                   <div className="col-4">
                     <button
-                      className="bgBlue shadowHover btn"
+                      className="bgBrown shadowHover btn"
                       onClick={() => this.handleSubmitNewTag}
                     >
                       Add tag
@@ -158,7 +162,11 @@ class ARecipe extends Form {
                   </div>
                 </div>
                 {this.renderTextarea("description", "Description")}
-                {this.renderInput("servings", "Servings", "number")}
+                <div className="row">
+                  <div className="col-4">
+                    {this.renderInput("servings", "Servings", "number")}
+                  </div>
+                </div>
               </div>
             </div>
             <div className="row">
@@ -179,12 +187,23 @@ class ARecipe extends Form {
                   ))}
                 {this.renderInput("newDirection", nextDirection)}
                 <button
-                  className="bgBlue shadowHover btn"
+                  className="bgBrown shadowHover btn"
                   onClick={() => this.handleSubmitNewDirection}
                 >
                   Add direction
                 </button>
               </div>
+            </div>
+            <div className="row justify-content-end">
+              <div className="col-1">
+                <button
+                  className="cancelBtn btn w-100"
+                  onClick={this.handleEditingToggle}
+                >
+                  Cancel
+                </button>
+              </div>
+              <div className="col-1">{this.renderSubmit("Save")}</div>
             </div>
           </React.Fragment>
         )}

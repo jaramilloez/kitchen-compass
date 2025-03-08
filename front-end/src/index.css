@@ -44,6 +44,13 @@ body {
   transition: box-shadow 0.2s;
 }
 
+.cancelBtn {
+  border: 3px solid rgb(100 140 190) !important;
+}
+.cancelBtn:hover {
+  background-color: rgb(100 140 190);
+}
+
 /* | Home | */
 
 .cardDrawer {

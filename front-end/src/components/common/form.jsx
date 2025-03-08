@@ -107,7 +107,10 @@ class Form extends Component {
 
   renderSubmit = (name) => {
     return (
-      <button className="btn btn-dark" onClick={this.handleSubmit}>
+      <button
+        className="bgBlue shadowHover btn w-100 h-100"
+        onClick={this.handleSubmit}
+      >
         {name}
       </button>
     );
