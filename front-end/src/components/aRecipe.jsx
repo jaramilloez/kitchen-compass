@@ -17,9 +17,9 @@ class ARecipe extends Form {
       name: "",
       description: "",
       servings: "",
-      tags: [],
       pic: "",
 
+      recipeTags: [],
       recipeIngredients: [],
       directions: [],
       newDirection: "",
@@ -75,8 +75,6 @@ class ARecipe extends Form {
     this.setState({ allTags, categories, allIngredients, units });
   }
 
-  async handleSubmitNewIngredient() {}
-
   handleSubmitNewDirection = () => {
     const { directions, newDirection } = this.state.data;
 
@@ -88,6 +86,8 @@ class ARecipe extends Form {
     });
     this.setState({ directions, newDirection: "" });
   };
+
+  handleSubmitNewTag = () => {};
 
   doSubmit = async () => {
     const { data, allTags, allIngredients, units, categories } = this.state;
@@ -110,10 +110,15 @@ class ARecipe extends Form {
       <div className="container my-4">
         <div className="row justify-content-end">
           <button
-            className="btn w-auto fs-5"
+            className="editBtn btn w-auto fs-5 d-flex align-items-center"
             onClick={() => this.setState({ editing: editing ? false : true })}
           >
-            Edit <FontAwesomeIcon icon={faPencil} className="fa-xs" />
+            <div className="overflow-hidden">
+              <div className="editBtnText overflow-hidden position-relative">
+                Edit
+              </div>
+            </div>
+            <FontAwesomeIcon icon={faPencil} className="fa-xs ps-1" />
           </button>
         </div>
         {!editing ? (
@@ -139,35 +144,48 @@ class ARecipe extends Form {
               </div>
               <div className="col-12 col-lg-6">
                 {this.renderInput("name", "Name")}
-                {this.renderSelect("tag", "Tag", allTags)}
-                {this.renderTextarea("description", "Description")}
-                {this.renderInput("servings", "Servings")}
-              </div>
-              {/* {this.renderSelect("ingredient", "Ingredient", allIngredients)} */}
-              <div className="row">{this.renderInput("newIngredient")}</div>
-              <div className="fs-3 mt-5">Directions</div>
-              {directions &&
-                directions.map((direction, index) => (
-                  <div key={direction._id}>
-                    {this.renderInput(
-                      "directions",
-                      index + 1 + ".",
-                      "text",
-                      index
-                    )}
+                <div className="row align-items-center">
+                  <div className="col-4">
+                    {this.renderSelect("tag", "Tag", allTags)}
                   </div>
-                ))}
-              <div className="d-flex">
+                  <div className="col-4">
+                    <button
+                      className="bgBlue shadowHover btn"
+                      onClick={() => this.handleSubmitNewTag}
+                    >
+                      Add tag
+                    </button>
+                  </div>
+                </div>
+                {this.renderTextarea("description", "Description")}
+                {this.renderInput("servings", "Servings", "number")}
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-8">
+                <div className="fs-4 mt-3 fw-bold">Ingredients</div>
+                {this.renderSelect("ingredient", "Ingredient", allIngredients)}
+                <div className="fs-4 mt-3 fw-bold">Directions</div>
+                {directions &&
+                  directions.map((direction, index) => (
+                    <div key={direction._id}>
+                      {this.renderInput(
+                        "directions",
+                        index + 1 + ".",
+                        "text",
+                        index
+                      )}
+                    </div>
+                  ))}
                 {this.renderInput("newDirection", nextDirection)}
                 <button
-                  className="btn btn-dark m-4"
-                  onClick={this.handleSubmitNewDirection}
+                  className="bgBlue shadowHover btn"
+                  onClick={() => this.handleSubmitNewDirection}
                 >
                   Add direction
                 </button>
               </div>
             </div>
-            <div className="row"></div>
           </React.Fragment>
         )}
       </div>

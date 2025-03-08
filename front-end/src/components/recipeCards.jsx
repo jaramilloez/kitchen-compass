@@ -11,7 +11,7 @@ const RecipeCards = ({ data }) => {
             className="col-md-4 col-6 d-flex justify-content-center text-decoration-none p-2"
             key={item._id}
           >
-            <div className="recipeCard card border-0">
+            <div className="recipeCard shadowHover card border-0">
               <div className="position-relative">
                 <img
                   className="card-img-top"

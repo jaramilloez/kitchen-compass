@@ -12,6 +12,7 @@ const Select = ({ name, label, error, options, value, ...rest }) => {
           name={name}
           {...rest}
         >
+          <option></option>
           {options.map((option) => (
             <option key={option._id} value={option._id}>
               {option.name}
