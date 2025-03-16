@@ -15,7 +15,7 @@ const RecipeCards = ({ data }) => {
               <div className="position-relative">
                 <img
                   className="card-img-top"
-                  src={item.pic}
+                  src={`data:image/jpg;base64,${item.pic}`}
                   alt={item.description}
                 />
                 <div className="cardDrawer position-absolute fs-5 w-100 p-3 overflow-hidden z-0 rounded-top-2">

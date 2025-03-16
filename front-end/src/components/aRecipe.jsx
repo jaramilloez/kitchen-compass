@@ -5,7 +5,7 @@ import Joi from "joi-browser";
 import _ from "lodash";
 import { getIngredients } from "../services/ingredientsService";
 import { getCategories } from "../services/categoriesService";
-import { getRecipe } from "../services/recipesService";
+import { getRecipe, saveRecipe } from "../services/recipesService";
 import { getUnits } from "../services/unitsService";
 import { getTags } from "../services/tagsService";
 import Form from "./common/form";
@@ -36,13 +36,14 @@ class ARecipe extends Form {
   };
 
   schema = {
+    _id: Joi.string(),
     name: Joi.string().required(),
     description: Joi.string().required(),
     servings: Joi.number().required(),
-    tag: Joi.required(),
+    // tag: Joi.required(),
     pic: Joi.required(),
-    directions: Joi.required(),
-    newDirection: Joi.string().required(),
+    // directions: Joi.required(),
+    // newDirection: Joi.string().required(),
   };
 
   async componentDidMount() {
@@ -54,7 +55,7 @@ class ARecipe extends Form {
     try {
       const recipeId = this.props.match.params._id;
       if (recipeId === "new-recipe") {
-        this.onEdit();
+        this.handleEditingToggle();
         return;
       }
       const { data: recipe } = await getRecipe(recipeId);
@@ -94,7 +95,19 @@ class ARecipe extends Form {
   };
 
   doSubmit = async () => {
-    const { data, allTags, allIngredients, units, categories } = this.state;
+    const { _id, name, description, servings, pic } = this.state.data;
+    try {
+      saveRecipe({
+        _id: _id,
+        name: name,
+        description: description,
+        servings: servings,
+        pic: pic,
+      });
+    } catch (er) {
+      console.log(er);
+    }
+    this.handleEditingToggle();
   };
 
   render() {
@@ -129,7 +142,11 @@ class ARecipe extends Form {
             </div>
             <div className="row">
               <div className="col-12 col-lg-6">
-                <img src={pic} alt={description} className="img-fluid"></img>
+                <img
+                  src={`data:image/jpg;base64,${pic}`}
+                  alt={description}
+                  className="img-fluid"
+                ></img>
               </div>
               <div className="col-12 col-lg-6">
                 {this.renderTitle(name)}
@@ -144,7 +161,11 @@ class ARecipe extends Form {
           <React.Fragment>
             <div className="row">
               <div className="col-12 col-lg-6">
-                <img src={pic} alt={description} className="img-fluid"></img>
+                <img
+                  src={`data:image/jpg;base64,${pic}`}
+                  alt={description}
+                  className="img-fluid"
+                ></img>
               </div>
               <div className="col-12 col-lg-6">
                 {this.renderInput("name", "Name")}
