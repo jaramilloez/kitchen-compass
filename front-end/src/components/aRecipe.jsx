@@ -116,6 +116,7 @@ class ARecipe extends Form {
       });
       for (const direction of directions) {
         saveDirection({
+          _id: direction._id,
           recipeId: direction.recipeId,
           step: direction.step,
           name: direction.name,
