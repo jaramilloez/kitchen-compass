@@ -40,11 +40,15 @@ class Form extends Component {
     if (errorMessage) {
       errors[input.name] = errorMessage;
     } else delete errors[input.name];
-
     //Sets state
     const data = { ...this.state.data };
-    data[input.name] = input.value;
-    this.setState({ data, errors });
+    if (Array.isArray(data[input.name])) {
+      data[input.name][input.id].name = input.value;
+      this.setState({ data, errors });
+    } else {
+      data[input.name] = input.value;
+      this.setState({ data, errors });
+    }
   };
 
   validateInput = ({ name, value }) => {
@@ -69,6 +73,7 @@ class Form extends Component {
         name={name}
         label={label}
         error={errors[name]}
+        index={index}
         value={findValue()}
         type={type}
         onChange={this.handleChange}

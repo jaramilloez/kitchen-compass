@@ -26,9 +26,8 @@ const Direction = mongoose.model("Direction", directionSchema);
 function validateDirection(direction) {
   const schema = Joi.object({
     recipeId: Joi.objectId().required(),
-    step: Joi.string()
-      .required()
-      .message("The step must be a valid number with format 1. or 10."),
+    step: Joi.string().required().pattern(new RegExp("^\\d{1,2}\\.$")),
+    // .message("The step must be a valid number with format 1. or 10."),
     name: Joi.string().required(),
   });
   return schema.validate(direction);

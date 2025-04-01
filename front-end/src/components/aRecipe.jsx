@@ -9,7 +9,7 @@ import { getRecipe, saveRecipe } from "../services/recipesService";
 import { getUnits } from "../services/unitsService";
 import { getTags } from "../services/tagsService";
 import Form from "./common/form";
-import { getDirections } from "../services/directionsService";
+import { getDirections, saveDirection } from "../services/directionsService";
 
 class ARecipe extends Form {
   state = {
@@ -22,10 +22,6 @@ class ARecipe extends Form {
       recipeTags: [],
       recipeIngredients: [],
       directions: [],
-      newDirection: "",
-
-      newIngredient: "",
-      category: "",
     },
     allTags: [],
     allIngredients: [],
@@ -40,15 +36,17 @@ class ARecipe extends Form {
     name: Joi.string().required(),
     description: Joi.string().required(),
     servings: Joi.number().required(),
-    // tag: Joi.required(),
     pic: Joi.required(),
-    // directions: Joi.required(),
-    // newDirection: Joi.string().required(),
+
+    recipeTags: Joi.required(),
+    recipeIngredients: Joi.required(),
+    directions: Joi.required(),
   };
 
   async componentDidMount() {
     await this.populateRecipe();
     await this.populateSelects();
+    console.log(this.state.data);
   }
 
   async populateRecipe() {
@@ -61,7 +59,18 @@ class ARecipe extends Form {
       const { data: recipe } = await getRecipe(recipeId);
       let { data: directions } = await getDirections(recipeId);
       directions = _.orderBy(directions, "step", "asc");
-      this.setState({ data: recipe, directions });
+      this.setState({
+        data: {
+          name: recipe.name,
+          description: recipe.description,
+          servings: recipe.servings,
+          pic: recipe.pic,
+
+          recipeTags: [],
+          recipeIngredients: [],
+          directions: directions,
+        },
+      });
     } catch (ex) {
       if (ex.response && ex.response.state === 404)
         this.props.history.replace("/notFound");
@@ -77,15 +86,15 @@ class ARecipe extends Form {
   }
 
   handleSubmitNewDirection = () => {
-    const { directions, newDirection } = this.state.data;
+    const { directions } = this.state.data;
 
-    const { error } = Joi.validate(newDirection, this.schema.newDirection);
-    if (error) return;
-    directions.push({
-      step: directions ? directions.length + 1 : 1,
-      name: newDirection,
-    });
-    this.setState({ directions, newDirection: "" });
+    // const { error } = Joi.validate(newDirection, this.schema.newDirection);
+    // if (error) return;
+    // directions.push({
+    //   step: directions ? directions.length + 1 : 1,
+    //   name: newDirection,
+    // });
+    // this.setState({ directions, newDirection: "" });
   };
 
   handleSubmitNewTag = () => {};
@@ -95,7 +104,8 @@ class ARecipe extends Form {
   };
 
   doSubmit = async () => {
-    const { _id, name, description, servings, pic } = this.state.data;
+    const { _id, name, description, servings, pic, directions } =
+      this.state.data;
     try {
       saveRecipe({
         _id: _id,
@@ -104,6 +114,13 @@ class ARecipe extends Form {
         servings: servings,
         pic: pic,
       });
+      for (const direction of directions) {
+        saveDirection({
+          recipeId: direction.recipeId,
+          step: direction.step,
+          name: direction.name,
+        });
+      }
     } catch (er) {
       console.log(er);
     }
@@ -111,15 +128,8 @@ class ARecipe extends Form {
   };
 
   render() {
-    const {
-      name,
-      description,
-      servings,
-      pic,
-      recipeIngredients,
-      directions,
-      newIngredient,
-    } = this.state.data;
+    const { name, description, servings, pic, recipeIngredients, directions } =
+      this.state.data;
     const { allIngredients, units, allTags, categories, editing } = this.state;
     const nextDirection = directions ? directions.length + 1 + "." : "1.";
 
@@ -195,18 +205,16 @@ class ARecipe extends Form {
                 <div className="fs-4 mt-3 fw-bold">Ingredients</div>
                 {this.renderSelect("ingredient", "Ingredient", allIngredients)}
                 <div className="fs-4 mt-3 fw-bold">Directions</div>
-                {directions &&
-                  directions.map((direction, index) => (
-                    <div key={direction._id}>
-                      {this.renderInput(
-                        "directions",
-                        index + 1 + ".",
-                        "text",
-                        index
-                      )}
-                    </div>
-                  ))}
-                {this.renderInput("newDirection", nextDirection)}
+                {directions.map((direction, index) => (
+                  <div key={direction._id}>
+                    {this.renderInput(
+                      "directions",
+                      direction.step,
+                      "text",
+                      index
+                    )}
+                  </div>
+                ))}
                 <button
                   className="bgBrown shadowHover btn"
                   onClick={() => this.handleSubmitNewDirection}
