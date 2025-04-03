@@ -1,7 +1,7 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil } from "@fortawesome/free-solid-svg-icons";
-import Joi from "joi-browser";
+import Joi from "joi";
 import _ from "lodash";
 import { getIngredients } from "../services/ingredientsService";
 import { getCategories } from "../services/categoriesService";
@@ -31,7 +31,7 @@ class ARecipe extends Form {
     errors: {},
   };
 
-  schema = {
+  schema = Joi.object({
     _id: Joi.string(),
     name: Joi.string().required(),
     description: Joi.string().required(),
@@ -40,13 +40,21 @@ class ARecipe extends Form {
 
     recipeTags: Joi.required(),
     recipeIngredients: Joi.required(),
-    directions: Joi.required(),
-  };
+    directions: Joi.array()
+      .items(
+        Joi.object({
+          _id: Joi.string().label("_id"),
+          recipeId: Joi.string().required().label("recipeId"),
+          step: Joi.string().required().label("step"),
+          name: Joi.string().required().label("direction"),
+        })
+      )
+      .required(),
+  });
 
   async componentDidMount() {
     await this.populateRecipe();
     await this.populateSelects();
-    console.log(this.state.data);
   }
 
   async populateRecipe() {
@@ -85,16 +93,13 @@ class ARecipe extends Form {
     this.setState({ allTags, categories, allIngredients, units });
   }
 
-  handleSubmitNewDirection = () => {
+  handleNewDirection = () => {
     const { directions } = this.state.data;
 
-    // const { error } = Joi.validate(newDirection, this.schema.newDirection);
-    // if (error) return;
-    // directions.push({
-    //   step: directions ? directions.length + 1 : 1,
-    //   name: newDirection,
-    // });
-    // this.setState({ directions, newDirection: "" });
+    directions.push({
+      step: ++directions.length,
+    });
+    this.setState({ directions, newDirection: "" });
   };
 
   handleSubmitNewTag = () => {};
@@ -104,11 +109,10 @@ class ARecipe extends Form {
   };
 
   doSubmit = async () => {
-    const { _id, name, description, servings, pic, directions } =
-      this.state.data;
+    const { name, description, servings, pic, directions } = this.state.data;
     try {
       saveRecipe({
-        _id: _id,
+        _id: this.props.match.params._id,
         name: name,
         description: description,
         servings: servings,
@@ -218,7 +222,7 @@ class ARecipe extends Form {
                 ))}
                 <button
                   className="bgBrown shadowHover btn"
-                  onClick={() => this.handleSubmitNewDirection}
+                  onClick={() => this.handleNewDirection}
                 >
                   Add direction
                 </button>

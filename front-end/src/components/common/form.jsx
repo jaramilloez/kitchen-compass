@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Joi from "joi-browser";
 import Textarea from "./textarea";
 import Select from "./select";
 import Input from "./input";
@@ -22,10 +21,12 @@ class Form extends Component {
   };
 
   validate = () => {
-    const { error } = Joi.validate(this.state.data, this.schema, {
+    const { error } = this.schema.validate(this.state.data, {
       abortEarly: false,
     });
+    console.log(error);
     if (!error) return null;
+
     const errors = {};
     for (let item of error.details) {
       errors[item.path[0]] = item.message;
@@ -34,28 +35,14 @@ class Form extends Component {
   };
 
   handleChange = ({ currentTarget: input }) => {
-    //Error handling
-    const errors = { ...this.state.errors };
-    const errorMessage = this.validateInput(input);
-    if (errorMessage) {
-      errors[input.name] = errorMessage;
-    } else delete errors[input.name];
-    //Sets state
+    //Gets the current data, updates the object, then updates state
     const data = { ...this.state.data };
     if (Array.isArray(data[input.name])) {
       data[input.name][input.id].name = input.value;
-      this.setState({ data, errors });
     } else {
       data[input.name] = input.value;
-      this.setState({ data, errors });
     }
-  };
-
-  validateInput = ({ name, value }) => {
-    const inputObj = { [name]: value };
-    const schema = { [name]: this.schema[name] };
-    const { error } = Joi.validate(inputObj, schema);
-    return error ? error.details[0].message : null;
+    this.setState({ data });
   };
 
   renderInput = (name, label, type = "text", index) => {
@@ -74,6 +61,7 @@ class Form extends Component {
         label={label}
         error={errors[name]}
         index={index}
+        min={1}
         value={findValue()}
         type={type}
         onChange={this.handleChange}
