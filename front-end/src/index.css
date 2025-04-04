@@ -107,6 +107,10 @@ body {
   left: 0 !important;
 }
 
+.deleteBtn:hover {
+  color: red;
+}
+
 /* | Log In or Sign Up | */
 
 @media (min-width: 758px) {

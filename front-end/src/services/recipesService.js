@@ -20,9 +20,9 @@ export function saveRecipe(recipe) {
   delete body._id;
 
   if (recipe._id) {
-    http.put(recipeUrl(recipe._id), body);
+    return http.put(recipeUrl(recipe._id), body);
   } else {
-    http.post(apiEndpoint, body);
+    return http.post(apiEndpoint, body);
   }
 }
 

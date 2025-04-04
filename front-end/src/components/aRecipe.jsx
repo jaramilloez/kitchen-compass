@@ -1,6 +1,6 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPencil } from "@fortawesome/free-solid-svg-icons";
+import { faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
 import Joi from "joi";
 import _ from "lodash";
 import { getIngredients } from "../services/ingredientsService";
@@ -43,8 +43,8 @@ class ARecipe extends Form {
     directions: Joi.array()
       .items(
         Joi.object({
-          _id: Joi.string().label("_id"),
-          recipeId: Joi.string().required().label("recipeId"),
+          _id: Joi.string().allow(null).label("_id"),
+          recipeId: Joi.string().allow(null).label("recipeId"),
           step: Joi.string().required().label("step"),
           name: Joi.string().required().label("direction"),
         })
@@ -99,10 +99,31 @@ class ARecipe extends Form {
       _id: null,
       recipeId: null,
       name: "",
-      step: directions.length + 1 + ".",
+      step: `${directions.length + 1}.`,
     });
-    this.setState({ directions });
-    console.log(this.state.data.directions);
+    this.setState((prevState) => ({
+      data: {
+        ...prevState.data,
+        directions,
+      },
+    }));
+  };
+
+  handleDeletingDirection = (index) => {
+    const { directions } = this.state.data;
+    directions.splice(index, 1);
+    for (let i = 0; i < directions.length; i++) {
+      directions[i] = {
+        ...directions[i],
+        step: `${i + 1}.`,
+      };
+    }
+    this.setState((prevState) => ({
+      data: {
+        ...prevState.data,
+        directions,
+      },
+    }));
   };
 
   handleSubmitNewTag = () => {};
@@ -114,7 +135,7 @@ class ARecipe extends Form {
   doSubmit = async () => {
     const { name, description, servings, pic, directions } = this.state.data;
     try {
-      const recipe = saveRecipe({
+      const { data: recipe } = await saveRecipe({
         _id: this.props.match.params._id,
         name: name,
         description: description,
@@ -139,7 +160,6 @@ class ARecipe extends Form {
     const { name, description, servings, pic, recipeIngredients, directions } =
       this.state.data;
     const { allIngredients, units, allTags, categories, editing } = this.state;
-    const nextDirection = directions ? directions.length + 1 + "." : "1.";
 
     return (
       <div className="container my-4">
@@ -210,16 +230,33 @@ class ARecipe extends Form {
             </div>
             <div className="row">
               <div className="col-8">
-                <div className="fs-4 mt-3 fw-bold">Ingredients</div>
+                <div className="row">
+                  <div className="fs-4 mt-3 fw-bold">Ingredients</div>
+                </div>
                 {this.renderSelect("ingredient", "Ingredient", allIngredients)}
-                <div className="fs-4 mt-3 fw-bold">Directions</div>
+                <div className="row">
+                  <div className="fs-4 mt-3 fw-bold">Directions</div>
+                </div>
                 {directions.map((direction, index) => (
-                  <div key={direction.step}>
-                    {this.renderInput(
-                      "directions",
-                      direction.step,
-                      "text",
-                      index
+                  <div key={direction.step} className="row">
+                    <div className="col">
+                      {this.renderInput(
+                        "directions",
+                        direction.step,
+                        "text",
+                        index
+                      )}
+                    </div>
+                    {directions.length > 1 && (
+                      <button
+                        className="deleteBtn btn w-auto fs-5 d-flex align-items-center"
+                        onClick={() => this.handleDeletingDirection(index)}
+                      >
+                        <FontAwesomeIcon
+                          icon={faTrash}
+                          className="fa-xs ps-1"
+                        />
+                      </button>
                     )}
                   </div>
                 ))}

@@ -24,7 +24,6 @@ class Form extends Component {
     const { error } = this.schema.validate(this.state.data, {
       abortEarly: false,
     });
-    console.log(error);
     if (!error) return null;
 
     const errors = {};
