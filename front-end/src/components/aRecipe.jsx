@@ -1,6 +1,6 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faPencil, faTrash, faPlus } from "@fortawesome/free-solid-svg-icons";
 import Joi from "joi";
 import _ from "lodash";
 import { getIngredients } from "../services/ingredientsService";
@@ -93,14 +93,23 @@ class ARecipe extends Form {
     this.setState({ allTags, categories, allIngredients, units });
   }
 
-  handleNewDirection = () => {
+  handleNewDirection = (index) => {
     const { directions } = this.state.data;
-    directions.push({
+    //Adds new direction after btn clicked
+    directions.splice(index + 1, 0, {
       _id: null,
       recipeId: null,
       name: "",
-      step: `${directions.length + 1}.`,
+      step: `${index + 2}.`,
     });
+    //Updates all directions' steps
+    for (let i = 0; i < directions.length; i++) {
+      directions[i] = {
+        ...directions[i],
+        step: `${i + 1}.`,
+      };
+    }
+    //Updates state
     this.setState((prevState) => ({
       data: {
         ...prevState.data,
@@ -111,13 +120,16 @@ class ARecipe extends Form {
 
   handleDeletingDirection = (index) => {
     const { directions } = this.state.data;
+    //Deletes direction at btn clicked
     directions.splice(index, 1);
+    //Updates all directions' steps
     for (let i = 0; i < directions.length; i++) {
       directions[i] = {
         ...directions[i],
         step: `${i + 1}.`,
       };
     }
+    //Updates state
     this.setState((prevState) => ({
       data: {
         ...prevState.data,
@@ -238,34 +250,35 @@ class ARecipe extends Form {
                   <div className="fs-4 mt-3 fw-bold">Directions</div>
                 </div>
                 {directions.map((direction, index) => (
-                  <div key={direction.step} className="row">
-                    <div className="col">
-                      {this.renderInput(
-                        "directions",
-                        direction.step,
-                        "text",
-                        index
+                  <div key={direction.step}>
+                    <div className="row">
+                      <div className="col">
+                        {this.renderInput(
+                          "directions",
+                          direction.step,
+                          "text",
+                          index
+                        )}
+                      </div>
+                      {directions.length > 1 && (
+                        <button
+                          className="deleteBtn btn w-auto h-auto d-flex align-items-center py-0"
+                          onClick={() => this.handleDeletingDirection(index)}
+                        >
+                          <FontAwesomeIcon icon={faTrash} />
+                        </button>
                       )}
                     </div>
-                    {directions.length > 1 && (
+                    <div className="row">
                       <button
-                        className="deleteBtn btn w-auto fs-5 d-flex align-items-center"
-                        onClick={() => this.handleDeletingDirection(index)}
+                        className="addBtn btn w-auto d-flex align-items-center ms-3 py-0"
+                        onClick={() => this.handleNewDirection(index)}
                       >
-                        <FontAwesomeIcon
-                          icon={faTrash}
-                          className="fa-xs ps-1"
-                        />
+                        <FontAwesomeIcon icon={faPlus} className="p-0" />
                       </button>
-                    )}
+                    </div>
                   </div>
                 ))}
-                <button
-                  className="bgBrown shadowHover btn"
-                  onClick={this.handleNewDirection}
-                >
-                  Add direction
-                </button>
               </div>
             </div>
             <div className="row justify-content-end">

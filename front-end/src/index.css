@@ -108,7 +108,11 @@ body {
 }
 
 .deleteBtn:hover {
-  color: red;
+  color: red !important;
+}
+
+.addBtn:hover {
+  color: rgb(100 140 190) !important;
 }
 
 /* | Log In or Sign Up | */
