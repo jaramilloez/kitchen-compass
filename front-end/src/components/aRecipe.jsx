@@ -95,11 +95,14 @@ class ARecipe extends Form {
 
   handleNewDirection = () => {
     const { directions } = this.state.data;
-
     directions.push({
-      step: ++directions.length,
+      _id: null,
+      recipeId: null,
+      name: "",
+      step: directions.length + 1 + ".",
     });
-    this.setState({ directions, newDirection: "" });
+    this.setState({ directions });
+    console.log(this.state.data.directions);
   };
 
   handleSubmitNewTag = () => {};
@@ -111,7 +114,7 @@ class ARecipe extends Form {
   doSubmit = async () => {
     const { name, description, servings, pic, directions } = this.state.data;
     try {
-      saveRecipe({
+      const recipe = saveRecipe({
         _id: this.props.match.params._id,
         name: name,
         description: description,
@@ -121,9 +124,9 @@ class ARecipe extends Form {
       for (const direction of directions) {
         saveDirection({
           _id: direction._id,
-          recipeId: direction.recipeId,
-          step: direction.step,
+          recipeId: recipe._id,
           name: direction.name,
+          step: direction.step,
         });
       }
     } catch (er) {
@@ -211,7 +214,7 @@ class ARecipe extends Form {
                 {this.renderSelect("ingredient", "Ingredient", allIngredients)}
                 <div className="fs-4 mt-3 fw-bold">Directions</div>
                 {directions.map((direction, index) => (
-                  <div key={direction._id}>
+                  <div key={direction.step}>
                     {this.renderInput(
                       "directions",
                       direction.step,
@@ -222,7 +225,7 @@ class ARecipe extends Form {
                 ))}
                 <button
                   className="bgBrown shadowHover btn"
-                  onClick={() => this.handleNewDirection}
+                  onClick={this.handleNewDirection}
                 >
                   Add direction
                 </button>
